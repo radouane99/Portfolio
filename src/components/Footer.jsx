@@ -24,10 +24,13 @@ const Footer = () => {
   ];
 
   const quickLinks = [
-    { name: t('nav.home'), href: "#home" },
-    { name: t('nav.about'), href: "#about" },
-    { name: t('nav.skills'), href: "#skills" },
-    { name: t('nav.contact'), href: "#contact" }
+    { name: t('nav.home'), href: "/#home" },
+    { name: t('nav.about'), href: "/#about" },
+    { name: t('nav.skills'), href: "/#skills" },
+    { name: t('nav.projects', { defaultValue: 'Projects' }), href: "/#projects" },
+    { name: t('nav.hackathons', { defaultValue: 'Hackathons' }), href: "/#hackathons" },
+    { name: t('nav.certificates', { defaultValue: 'Certificates' }), href: "/certificates" },
+    { name: t('nav.contact'), href: "/#contact" }
   ];
 
   return (

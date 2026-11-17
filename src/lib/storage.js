@@ -5,6 +5,7 @@ export const STORAGE_BUCKETS = {
   PROJECTS: 'projects',
   CERTIFICATES: 'certificates',
   TECHNOLOGIES: 'technologies',
+  HACKATHONS: 'certificates', // Reuses certificates bucket so no extra bucket setup is required
 }
 
 /**

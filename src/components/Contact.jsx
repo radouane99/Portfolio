@@ -66,21 +66,21 @@ const Contact = () => {
   const contactInfo = [
     {
       icon: <Mail className="w-5 h-5" />,
-      label: t('email'),
+      label: t('contact.email_label', { defaultValue: 'Email' }),
       value: "radouane.elasri@usmba.ac.ma",
       link: "mailto:radouane.elasri@usmba.ac.ma"
     },
     {
       icon: <Phone className="w-5 h-5" />,
-      label: t('phone'),
+      label: t('contact.phone_label', { defaultValue: 'Phone' }),
       value: "+212 609365349",
       link: "tel:+212609365349"
     },
     {
       icon: <MapPin className="w-5 h-5" />,
-      label: t('contact.location_label'),
-      value: t('contact.location_val'),
-      link: "#"
+      label: t('contact.location_label', { defaultValue: 'Location' }),
+      value: t('contact.location_val', { defaultValue: 'Fez, Morocco' }),
+      link: "#contact"
     }
   ];
 
@@ -315,10 +315,12 @@ const Contact = () => {
                 <a
                   key={social.name}
                   href={social.url}
-                  className={`cursor-target flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all duration-300 transform hover:scale-105 ${drakeMode
-                    ? 'bg-[#050A30] text-gray-300 hover:bg-gray-700 border border-gray-700'
-                    : 'bg-white text-gray-700 hover:bg-blue-50 border border-gray-200'
-                    } ${social.color}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`cursor-target flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium transition-all duration-300 transform hover:scale-105 border ${drakeMode
+                    ? 'bg-white/5 text-gray-300 hover:bg-violet-500/20 hover:text-white border-white/10 hover:border-violet-400/50'
+                    : 'bg-white text-gray-700 hover:bg-violet-50 hover:text-violet-700 border-violet-200'
+                    }`}
                 >
                   {social.icon}
                   {social.name}

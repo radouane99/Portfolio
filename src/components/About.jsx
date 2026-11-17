@@ -190,6 +190,7 @@ const WorkHistory = () => {
       location: t('about.location_fes'),
       description: t('about.edu1_desc'),
       status: t('about.status_progress'),
+      statusKey: 'progress',
       technologies: ['Java', 'Python', 'Machine Learning'],
       courses: [t('about.edu1_c1'), t('about.edu1_c2'), t('about.edu1_c3')]
     },
@@ -200,6 +201,7 @@ const WorkHistory = () => {
       location: 'Maroc',
       description: t('about.cert1_desc'),
       status: t('about.status_certified'),
+      statusKey: 'certified',
       technologies: ['Selenium'],
       courses: [t('about.cert1_c1'), t('about.cert1_c2'), t('about.cert1_c3')]
     },
@@ -210,6 +212,7 @@ const WorkHistory = () => {
       location: t('about.location_fes'),
       description: t('about.edu2_desc'),
       status: t('about.status_completed'),
+      statusKey: 'completed',
       technologies: ['Figma'],
       courses: [t('about.edu2_c1'), t('about.edu2_c2'), t('about.edu2_c3')]
     },
@@ -220,6 +223,7 @@ const WorkHistory = () => {
       location: t('about.location_fes'),
       description: t('about.edu3_desc'),
       status: t('about.status_completed'),
+      statusKey: 'completed',
       technologies: ['JavaScript', 'PostgreSQL'],
       courses: [t('about.edu3_c1'), t('about.edu3_c2')]
     },
@@ -230,6 +234,7 @@ const WorkHistory = () => {
       location: t('about.location_fes'),
       description: t('about.edu4_desc'),
       status: t('about.status_completed'),
+      statusKey: 'completed',
       technologies: ['.NET', 'C#'],
       courses: [t('about.edu4_c1'), t('about.edu4_c2'), t('about.edu4_c3')]
     }
@@ -418,7 +423,7 @@ const WorkHistory = () => {
                         </div>
                       </div>
                       <span className={`px-3 py-1 text-xs font-semibold rounded-full border ${
-                        edu.status === 'In Progress'
+                        edu.statusKey === 'progress'
                           ? isDarkMode ? 'bg-violet-500/20 text-violet-300 border-violet-500/30' : 'bg-violet-100 text-violet-700 border-violet-200'
                           : isDarkMode ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' : 'bg-emerald-100 text-emerald-700 border-emerald-200'
                       }`}>

@@ -57,12 +57,33 @@ CREATE TABLE IF NOT EXISTS certificates (
 );
 
 -- ============================================
+-- 4B. CREATE HACKATHONS TABLE
+-- ============================================
+CREATE TABLE IF NOT EXISTS hackathons (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title TEXT NOT NULL,
+  organizer TEXT NOT NULL,
+  event_date TEXT,
+  location TEXT,
+  award TEXT,
+  project_name TEXT,
+  description TEXT NOT NULL,
+  technologies TEXT[],
+  image_path TEXT,
+  certificate_path TEXT,
+  certificate_url TEXT,
+  project_url TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- ============================================
 -- 5. ENABLE ROW LEVEL SECURITY (RLS)
 -- ============================================
 ALTER TABLE technologies ENABLE ROW LEVEL SECURITY;
 ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
 ALTER TABLE projects_technologies ENABLE ROW LEVEL SECURITY;
 ALTER TABLE certificates ENABLE ROW LEVEL SECURITY;
+ALTER TABLE hackathons ENABLE ROW LEVEL SECURITY;
 
 -- ============================================
 -- 6. RLS POLICIES FOR TECHNOLOGIES
@@ -171,6 +192,31 @@ CREATE POLICY "Only authenticated users can update certificates"
 -- Only authenticated users can DELETE certificates
 CREATE POLICY "Only authenticated users can delete certificates"
   ON certificates
+  FOR DELETE
+  USING (auth.role() = 'authenticated');
+
+-- ============================================
+-- 9B. RLS POLICIES FOR HACKATHONS
+-- ============================================
+
+CREATE POLICY "Anyone can view hackathons"
+  ON hackathons
+  FOR SELECT
+  USING (true);
+
+CREATE POLICY "Only authenticated users can insert hackathons"
+  ON hackathons
+  FOR INSERT
+  WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "Only authenticated users can update hackathons"
+  ON hackathons
+  FOR UPDATE
+  USING (auth.role() = 'authenticated')
+  WITH CHECK (auth.role() = 'authenticated');
+
+CREATE POLICY "Only authenticated users can delete hackathons"
+  ON hackathons
   FOR DELETE
   USING (auth.role() = 'authenticated');
 

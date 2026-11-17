@@ -16,38 +16,37 @@ const Preloader = () => {
           clearInterval(timer);
           setTimeout(() => {
             setIsExiting(true);
-            setTimeout(() => setIsLoaded(true), 600);
-          }, 400);
+            setTimeout(() => setIsLoaded(true), 300);
+          }, 150);
           return 100;
         }
-        // Smooth logarithmic progression
         const remaining = 100 - prev;
-        const increment = Math.min(remaining * 0.1 + 0.5, 4);
-        return prev + increment;
+        const increment = Math.min(remaining * 0.22 + 2.5, 12);
+        return Math.min(prev + increment, 100);
       });
-    }, 60);
+    }, 40);
 
     return () => clearInterval(timer);
   }, []);
 
   const theme = {
     light: {
-      bg: '#ffffff',
-      surface: '#f8fafc',
-      primary: '#2563eb',
-      primaryLight: '#3b82f6',
-      text: '#1e293b',
-      textSecondary: '#64748b',
-      border: '#e2e8f0'
+      bg: '#f8f7ff',
+      surface: '#ffffff',
+      primary: '#8b5cf6',
+      primaryLight: '#ec4899',
+      text: '#1e1b4b',
+      textSecondary: '#6b7280',
+      border: '#ede9fe'
     },
     dark: {
-      bg: '#0f172a',
-      surface: '#1e293b',
-      primary: '#60a5fa',
-      primaryLight: '#93c5fd',
-      text: '#f1f5f9',
+      bg: '#08080f',
+      surface: '#121224',
+      primary: '#8b5cf6',
+      primaryLight: '#ec4899',
+      text: '#f8fafc',
       textSecondary: '#94a3b8',
-      border: '#334155'
+      border: '#1e1b4b'
     }
   };
 

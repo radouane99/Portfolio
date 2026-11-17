@@ -7,18 +7,20 @@ import { useTranslation } from 'react-i18next';
 
 const KNOWLEDGE_BASE = {
   en: {
-    skills: "Radouane is a Full-stack developer skilled in React, Node.js, and DevOps. He is an expert in modern web technologies and UI/UX design.",
-    projects: "He has worked on various projects including Healthcare Management systems, E-Commerce platforms, and AI Content Generators. You can see them in the Projects section!",
-    experience: "He is a Computer Engineering student with experience in 1st year engineering. He focuses on building scalable and maintainable applications.",
-    contact: "You can reach Radouane via the contact form on this page or email him at radouane.elasri@usmba.ac.ma.",
-    default: "I'm not sure about that. I can tell you about Radouane's skills, projects, experience, or how to contact him!"
+    skills: "Radouane is a Full-Stack Developer & ISTQB® Certified Tester skilled in React, TypeScript, Node.js, Python (Selenium), Supabase, PostgreSQL, Spring Boot, and Docker.",
+    projects: "He has built full-stack platforms including academic digitalization portals, e-commerce analytics, and AI SaaS tools. Check out the Projects section for live demos!",
+    hackathons: "Radouane earned the 'Galactic Problem Solver' certification in the 2026 NASA Space Apps Challenge (Nov 2026) and excelled in the Build with Gemma Hackathon (July 2026) organized by GDGC ENSAB, Google Gemma Team & AI Crafters!",
+    experience: "He works as a Specialized Technician in Development at ENS Fez (since Sept 2024), previously spent 4+ years at E-Market Solutions in Python/JS automation, and is pursuing his State Engineering degree in Computer Engineering at UPF.",
+    contact: "You can reach Radouane via the contact form on this page, email him at radouane.elasri@usmba.ac.ma, or call +212 609365349.",
+    default: "I can tell you all about Radouane's skills, projects, hackathons & awards, professional experience, or how to contact him!"
   },
   fr: {
-    skills: "Radouane est un développeur Full-stack compétent en React, Node.js et DevOps. Il est expert en technologies web modernes et en design UI/UX.",
-    projects: "Il a travaillé sur divers projets, notamment des systèmes de gestion de la santé, des plateformes de commerce électronique et des générateurs de contenu IA. Vous pouvez les voir dans la section Projets !",
-    experience: "Il est étudiant en génie informatique. Il se concentre sur la création d'applications évolutives et faciles à maintenir.",
-    contact: "Vous pouvez contacter Radouane via le formulaire de contact sur cette page ou lui envoyer un e-mail à radouane.elasri@usmba.ac.ma.",
-    default: "Je ne suis pas sûr de cela. Je peux vous parler des compétences, des projets, de l'expérience de Radouane ou de la manière de le contacter !"
+    skills: "Radouane est un développeur Full-Stack et certifié ISTQB®, expert en React, TypeScript, Node.js, Python (Selenium), Supabase, PostgreSQL, Spring Boot et Docker.",
+    projects: "Il a réalisé plusieurs projets Full-Stack et IA, notamment des plateformes académiques, e-commerce et des tableaux de bord analytiques. Découvrez-les dans la section Projets !",
+    hackathons: "Radouane a obtenu le titre 'Galactic Problem Solver' lors du NASA Space Apps Challenge 2026 (Nov 2026) et s'est distingué au Build with Gemma Hackathon (Juillet 2026) organisé par GDGC ENSAB, Google Gemma Team et AI Crafters !",
+    experience: "Il est Technicien Spécialisé en Développement à l'ENS Fès (depuis Sept 2024), avec plus de 4 ans d'expérience chez E-Market Solutions en automatisation Python/Selenium, et prépare son diplôme d'Ingénieur d'État à l'UPF.",
+    contact: "Vous pouvez contacter Radouane via le formulaire de contact, par e-mail à radouane.elasri@usmba.ac.ma ou par téléphone au +212 609365349.",
+    default: "Je peux vous parler des compétences, des projets, des hackathons, de l'expérience de Radouane ou de la manière de le contacter !"
   }
 };
 
@@ -109,11 +111,13 @@ const ChatBot = () => {
             
             if (lowerMsg.includes('skill') || lowerMsg.includes('compétence') || lowerMsg.includes('tech')) {
                 reply = KNOWLEDGE_BASE[lang].skills;
+            } else if (lowerMsg.includes('hackathon') || lowerMsg.includes('award') || lowerMsg.includes('prix') || lowerMsg.includes('compétition')) {
+                reply = KNOWLEDGE_BASE[lang].hackathons;
             } else if (lowerMsg.includes('project') || lowerMsg.includes('projet')) {
                 reply = KNOWLEDGE_BASE[lang].projects;
-            } else if (lowerMsg.includes('experience') || lowerMsg.includes('expérience') || lowerMsg.includes('parcours')) {
+            } else if (lowerMsg.includes('experience') || lowerMsg.includes('expérience') || lowerMsg.includes('parcours') || lowerMsg.includes('education') || lowerMsg.includes('formation')) {
                 reply = KNOWLEDGE_BASE[lang].experience;
-            } else if (lowerMsg.includes('contact') || lowerMsg.includes('email') || lowerMsg.includes('joindre')) {
+            } else if (lowerMsg.includes('contact') || lowerMsg.includes('email') || lowerMsg.includes('joindre') || lowerMsg.includes('phone') || lowerMsg.includes('téléphone')) {
                 reply = KNOWLEDGE_BASE[lang].contact;
             }
             
@@ -256,17 +260,17 @@ const ChatBot = () => {
                     whileHover={{ scale: 1.1, rotate: 5 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setIsOpen(true)}
-                    className={`group relative p-3 sm:p-4 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 ${drakeMode
-                        ? 'bg-gradient-to-br from-cyan-500 via-blue-600 to-purple-600 text-white'
-                        : 'bg-gradient-to-br from-blue-600 via-cyan-500 to-blue-700 text-white'
-                        } hover:shadow-3xl hover:shadow-blue-500/30`}
+                    className={`group relative p-3.5 sm:p-4 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 ${drakeMode
+                        ? 'bg-gradient-to-br from-violet-600 via-purple-600 to-pink-500 text-white'
+                        : 'bg-gradient-to-br from-violet-600 via-purple-500 to-pink-500 text-white'
+                        } hover:shadow-3xl hover:shadow-violet-500/40`}
                     aria-label="Open chat"
                 >
                     <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6 group-hover:scale-110 transition-transform" />
                     <div className="absolute -top-1 -right-1">
                         <div className="relative">
-                            <div className={`absolute inset-0 animate-ping ${drakeMode ? 'bg-cyan-400' : 'bg-blue-400'} rounded-full opacity-75`}></div>
-                            <div className={`relative w-2 h-2 sm:w-3 sm:h-3 ${drakeMode ? 'bg-cyan-400' : 'bg-blue-400'} rounded-full`}></div>
+                            <div className={`absolute inset-0 animate-ping ${drakeMode ? 'bg-pink-400' : 'bg-violet-400'} rounded-full opacity-75`}></div>
+                            <div className={`relative w-2 h-2 sm:w-3 sm:h-3 ${drakeMode ? 'bg-pink-400' : 'bg-violet-400'} rounded-full`}></div>
                         </div>
                     </div>
                 </motion.button>
@@ -301,15 +305,15 @@ const ChatBot = () => {
                                     margin: '1rem'
                                 })
                             }}
-                            className={`flex flex-col rounded-2xl sm:rounded-3xl shadow-2xl sm:shadow-3xl overflow-hidden transition-all duration-300 backdrop-blur-sm ${dimensions.position} ${drakeMode
-                                ? 'bg-gradient-to-b from-[#0A1A3A]/95 to-[#152A55]/95 border border-cyan-500/20 text-white'
-                                : 'bg-gradient-to-b from-white to-blue-50/95 border border-blue-100 text-gray-900'
+                            className={`flex flex-col rounded-2xl sm:rounded-3xl shadow-2xl sm:shadow-3xl overflow-hidden transition-all duration-300 backdrop-blur-xl ${dimensions.position} ${drakeMode
+                                ? 'bg-gradient-to-b from-[#0d0d1a]/95 to-[#08080f]/95 border border-violet-500/30 text-white'
+                                : 'bg-gradient-to-b from-white to-violet-50/95 border border-violet-200 text-gray-900'
                                 }`}
                         >
                             {/* Header */}
                             <div className={`p-3 sm:p-4 flex items-center justify-between ${drakeMode
-                                ? 'bg-gradient-to-r from-blue-900/50 to-cyan-900/30 border-b border-cyan-500/10'
-                                : 'bg-gradient-to-r from-blue-600 to-cyan-500 border-b border-blue-200'
+                                ? 'bg-gradient-to-r from-violet-900/60 to-pink-900/40 border-b border-violet-500/20'
+                                : 'bg-gradient-to-r from-violet-600 to-pink-500 border-b border-violet-200'
                                 } text-white shadow-lg`}>
                                 <div className="flex items-center gap-2 sm:gap-3">
                                     <motion.div
@@ -366,8 +370,8 @@ const ChatBot = () => {
                             {!isMinimized && (
                                 <>
                                     <div className={`flex-1 overflow-y-auto p-3 sm:p-4 space-y-4 sm:space-y-6 scrollbar-thin scrollbar-track-transparent ${drakeMode
-                                        ? 'scrollbar-thumb-cyan-500/30 hover:scrollbar-thumb-cyan-500/50'
-                                        : 'scrollbar-thumb-blue-200 hover:scrollbar-thumb-blue-300'
+                                        ? 'scrollbar-thumb-violet-500/30 hover:scrollbar-thumb-violet-500/50'
+                                        : 'scrollbar-thumb-violet-200 hover:scrollbar-thumb-violet-300'
                                         }`}>
                                         {messages.map((msg, idx) => (
                                             <motion.div
@@ -380,12 +384,10 @@ const ChatBot = () => {
                                                 <div className={`flex gap-2 sm:gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
                                                     style={{ maxWidth: dimensions.messageMaxWidth }}>
                                                     <div className={`w-7 h-7 sm:w-9 sm:h-9 rounded-full flex items-center justify-center flex-shrink-0 shadow-md ${msg.role === 'user'
-                                                        ? drakeMode
-                                                            ? 'bg-gradient-to-br from-blue-500 to-cyan-400 text-white'
-                                                            : 'bg-gradient-to-br from-blue-600 to-cyan-500 text-white'
+                                                        ? 'bg-gradient-to-br from-violet-500 to-pink-500 text-white'
                                                         : drakeMode
-                                                            ? 'bg-gradient-to-br from-cyan-500/20 to-blue-500/20 text-cyan-300 border border-cyan-500/30'
-                                                            : 'bg-gradient-to-br from-blue-100 to-cyan-50 text-blue-600 border border-blue-200'
+                                                            ? 'bg-violet-500/20 text-violet-300 border border-violet-500/30'
+                                                            : 'bg-violet-100 text-violet-600 border border-violet-200'
                                                         }`}>
                                                         {msg.role === 'user' ? <User className="w-3 h-3 sm:w-4 sm:h-4" /> : <Bot className="w-3 h-3 sm:w-4 sm:h-4" />}
                                                     </div>
@@ -393,12 +395,10 @@ const ChatBot = () => {
                                                         initial={{ scale: 0.95 }}
                                                         animate={{ scale: 1 }}
                                                         className={`p-2.5 sm:p-4 rounded-xl sm:rounded-2xl text-xs sm:text-sm leading-relaxed shadow-sm ${msg.role === 'user'
-                                                            ? drakeMode
-                                                                ? 'bg-gradient-to-r from-blue-600/90 to-cyan-600/90 text-white rounded-br-none sm:rounded-br-none'
-                                                                : 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-br-none sm:rounded-br-none'
+                                                            ? 'bg-gradient-to-r from-violet-600 to-pink-500 text-white rounded-br-none sm:rounded-br-none'
                                                             : drakeMode
-                                                                ? 'bg-gradient-to-r from-blue-900/30 to-cyan-900/20 text-gray-200 rounded-bl-none sm:rounded-bl-none border border-cyan-500/10'
-                                                                : 'bg-gradient-to-r from-gray-50 to-blue-50 text-gray-800 rounded-bl-none sm:rounded-bl-none border border-blue-100'
+                                                                ? 'bg-white/5 text-gray-200 rounded-bl-none sm:rounded-bl-none border border-violet-500/20'
+                                                                : 'bg-violet-50/70 text-gray-800 rounded-bl-none sm:rounded-bl-none border border-violet-100'
                                                             }`}
                                                     >
                                                         {msg.content}
@@ -415,30 +415,30 @@ const ChatBot = () => {
                                             >
                                                 <div className="flex gap-2 sm:gap-3" style={{ maxWidth: dimensions.messageMaxWidth }}>
                                                     <div className={`w-7 h-7 sm:w-9 sm:h-9 rounded-full flex items-center justify-center ${drakeMode
-                                                        ? 'bg-gradient-to-br from-cyan-500/20 to-blue-500/20 text-cyan-300 border border-cyan-500/30'
-                                                        : 'bg-gradient-to-br from-blue-100 to-cyan-50 text-blue-600 border border-blue-200'
+                                                        ? 'bg-violet-500/20 text-violet-300 border border-violet-500/30'
+                                                        : 'bg-violet-100 text-violet-600 border border-violet-200'
                                                         }`}>
                                                         <Bot className="w-3 h-3 sm:w-4 sm:h-4" />
                                                     </div>
                                                     <div className={`p-2.5 sm:p-4 rounded-xl sm:rounded-2xl rounded-bl-none ${drakeMode
-                                                        ? 'bg-gradient-to-r from-blue-900/30 to-cyan-900/20 border border-cyan-500/10'
-                                                        : 'bg-gradient-to-r from-gray-50 to-blue-50 border border-blue-100'
+                                                        ? 'bg-white/5 border border-violet-500/20'
+                                                        : 'bg-violet-50/70 border border-violet-100'
                                                         }`}>
                                                         <div className="flex items-center gap-1">
                                                             <motion.div
                                                                 animate={{ y: [0, -4, 0] }}
                                                                 transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
-                                                                className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${drakeMode ? 'bg-cyan-400' : 'bg-blue-400'}`}
+                                                                className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${drakeMode ? 'bg-violet-400' : 'bg-violet-500'}`}
                                                             />
                                                             <motion.div
                                                                 animate={{ y: [0, -4, 0] }}
                                                                 transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
-                                                                className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${drakeMode ? 'bg-cyan-400' : 'bg-blue-400'}`}
+                                                                className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${drakeMode ? 'bg-violet-400' : 'bg-violet-500'}`}
                                                             />
                                                             <motion.div
                                                                 animate={{ y: [0, -4, 0] }}
                                                                 transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }}
-                                                                className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${drakeMode ? 'bg-cyan-400' : 'bg-blue-400'}`}
+                                                                className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${drakeMode ? 'bg-violet-400' : 'bg-violet-500'}`}
                                                             />
                                                         </div>
                                                     </div>
@@ -453,8 +453,8 @@ const ChatBot = () => {
                                                 transition={{ delay: 0.5 }}
                                                 className="mt-3 sm:mt-4"
                                             >
-                                                <p className={`text-xs font-medium mb-2 sm:mb-3 ${drakeMode ? 'text-cyan-300/70' : 'text-blue-600/70'} text-center`}>
-                                                    Try asking about:
+                                                <p className={`text-xs font-medium mb-2 sm:mb-3 ${drakeMode ? 'text-violet-300/80' : 'text-violet-600/80'} text-center`}>
+                                                    {t('chatbot.try_asking', { defaultValue: 'Try asking about:' })}
                                                 </p>
                                                 <div className={`grid ${dimensions.quickQuestionsCols} gap-1.5 sm:gap-2`}>
                                                     {quickQuestions.map((question, idx) => (
@@ -464,8 +464,8 @@ const ChatBot = () => {
                                                             whileTap={{ scale: 0.98 }}
                                                             onClick={() => handleQuickQuestion(question)}
                                                             className={`p-2 sm:p-3 text-xs rounded-lg sm:rounded-xl text-left transition-all duration-300 ${drakeMode
-                                                                ? 'bg-blue-900/30 hover:bg-blue-800/40 border border-cyan-500/10 hover:border-cyan-400/30 text-gray-200'
-                                                                : 'bg-blue-50 hover:bg-blue-100 border border-blue-200 hover:border-blue-300 text-gray-700'
+                                                                ? 'bg-white/5 hover:bg-violet-500/20 border border-violet-500/20 hover:border-violet-400/40 text-gray-200'
+                                                                : 'bg-violet-50 hover:bg-violet-100 border border-violet-200 hover:border-violet-300 text-gray-700'
                                                                 }`}
                                                         >
                                                             {question}
@@ -484,13 +484,13 @@ const ChatBot = () => {
                                         animate={{ opacity: 1, y: 0 }}
                                         onSubmit={handleSend}
                                         className={`p-3 sm:p-4 pt-2 sm:pt-3 ${drakeMode
-                                            ? 'bg-gradient-to-t from-blue-900/20 to-transparent border-t border-cyan-500/10'
-                                            : 'bg-gradient-to-t from-blue-50/50 to-transparent border-t border-blue-100'
+                                            ? 'bg-gradient-to-t from-violet-950/30 to-transparent border-t border-violet-500/20'
+                                            : 'bg-gradient-to-t from-violet-50/50 to-transparent border-t border-violet-100'
                                             } shadow-inner`}
                                     >
                                         <div className={`flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 rounded-lg sm:rounded-xl border-2 transition-all duration-300 shadow-sm ${drakeMode
-                                            ? 'bg-blue-900/20 border-cyan-500/20 focus-within:border-cyan-400/40 focus-within:shadow-cyan-500/10'
-                                            : 'bg-white border-blue-200 focus-within:border-blue-400 focus-within:shadow-blue-200'
+                                            ? 'bg-white/5 border-violet-500/20 focus-within:border-violet-400/50'
+                                            : 'bg-white border-violet-200 focus-within:border-violet-400'
                                             }`}>
                                             <input
                                                 ref={inputRef}
@@ -513,18 +513,13 @@ const ChatBot = () => {
                                                 disabled={!input.trim() || isLoading}
                                                 className={`p-2 sm:p-2.5 rounded-lg sm:rounded-xl transition-all duration-300 shadow-md ${!input.trim() || isLoading
                                                     ? 'opacity-50 cursor-not-allowed'
-                                                    : drakeMode
-                                                        ? 'bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white'
-                                                        : 'bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white'
+                                                    : 'bg-gradient-to-r from-violet-600 to-pink-500 hover:from-violet-500 hover:to-pink-400 text-white'
                                                     }`}
                                                 aria-label="Send message"
                                             >
                                                 <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                                             </motion.button>
                                         </div>
-                                        <p className={`text-[9px] sm:text-[10px] mt-1.5 sm:mt-2 text-center opacity-60 ${drakeMode ? 'text-cyan-300/60' : 'text-blue-600/60'}`}>
-                                            {t('chatbot.thinking')}
-                                        </p>
                                     </motion.form>
                                 </>
                             )}

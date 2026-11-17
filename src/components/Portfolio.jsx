@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import Navbar from './Navbar.jsx'
 import Home from './Home.jsx'
 import About from './About.jsx'
+import TechSkills from './TechSkills.jsx'
 import MySkills from './MySkills.jsx'
+import Hackathons from './Hackathons.jsx'
 import Contact from './Contact.jsx'
 import Preloader from './Preloader.jsx'
 import ChatBot from './ChatBot.jsx'
@@ -11,6 +14,7 @@ import { useTheme } from '../contexts/ThemeContext'
 
 function Portfolio() {
   const { isDarkMode: dark } = useTheme()
+  const location = useLocation()
   const [loading, setLoading] = useState(() => !sessionStorage.getItem('has-loaded'))
 
   /* Preloader */
@@ -19,10 +23,20 @@ function Portfolio() {
       const t = setTimeout(() => {
         setLoading(false)
         sessionStorage.setItem('has-loaded', 'true')
-      }, 3500)
+      }, 1500)
       return () => clearTimeout(t)
     }
   }, [loading])
+
+  /* Scroll to hash when navigating from another route */
+  useEffect(() => {
+    if (!loading && location.hash) {
+      const targetId = location.hash.replace('#', '')
+      setTimeout(() => {
+        document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }, 100)
+    }
+  }, [loading, location.hash])
 
   /* ── Scroll Progress Bar ──────────────────────────────────── */
   useEffect(() => {
@@ -87,8 +101,14 @@ function Portfolio() {
         <section id="about" className="min-h-screen">
           <About />
         </section>
-        <section id="skills" className="min-h-screen">
+        <section id="skills">
+          <TechSkills />
+        </section>
+        <section id="projects" className="min-h-screen">
           <MySkills />
+        </section>
+        <section id="hackathons">
+          <Hackathons />
         </section>
         <section id="contact" className="min-h-screen">
           <Contact />

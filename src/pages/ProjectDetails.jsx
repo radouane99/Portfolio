@@ -17,17 +17,20 @@ import {
 import { Link } from 'react-router-dom'
 
 import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
 import { getProjectById } from '../services/projectsService'
 import TechBadge from '../components/TechBadge'
 import ErrorState from '../components/ErrorState'
 import ProjectGallery from '../components/ProjectGallery'
 
 import { useTheme } from '../contexts/ThemeContext'
+import { useTranslation } from 'react-i18next'
 
 const ProjectDetails = () => {
   const { id } = useParams()
   const navigate = useNavigate()
   const { isDarkMode: drakeMode } = useTheme()
+  const { t } = useTranslation()
 
   const [project, setProject] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -75,7 +78,7 @@ const ProjectDetails = () => {
   if (loading) {
     return (
       <div style={{
-        backgroundColor: drakeMode ? '#050A30' : '#eff9ff',
+        backgroundColor: drakeMode ? '#08080f' : '#f8f7ff',
         minHeight: '100vh'
       }}>
         <Navbar />
@@ -93,7 +96,7 @@ const ProjectDetails = () => {
   if (error || !project) {
     return (
       <div style={{
-        backgroundColor: drakeMode ? '#050A30' : '#eff9ff',
+        backgroundColor: drakeMode ? '#08080f' : '#f8f7ff',
         minHeight: '100vh'
       }}>
         <Navbar />
@@ -110,7 +113,7 @@ const ProjectDetails = () => {
 
   return (
     <div style={{
-      backgroundColor: drakeMode ? '#050A30' : '#eff9ff',
+      backgroundColor: drakeMode ? '#08080f' : '#f8f7ff',
       color: drakeMode ? '#EBE6E0' : '#1A1A1A',
       minHeight: '100vh',
       transition: 'background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
@@ -124,13 +127,13 @@ const ProjectDetails = () => {
             <button
               onClick={handleBack}
               className={`group inline-flex items-center gap-3 px-5 py-2.5 rounded-2xl transition-all duration-300 transform hover:scale-105 ${drakeMode
-                ? 'bg-[#334155]/20 hover:bg-[#334155]/40 text-cyan-400 hover:text-white border border-cyan-500/20 hover:border-cyan-400/40'
-                : 'bg-white text-blue-600 hover:text-blue-700 shadow-md hover:shadow-xl border border-blue-100 hover:border-blue-200'
+                ? 'bg-white/5 hover:bg-violet-500/20 text-violet-300 hover:text-white border border-violet-500/30'
+                : 'bg-white text-violet-700 hover:text-violet-800 shadow-md hover:shadow-xl border border-violet-200'
                 }`}
               aria-label="Back to projects"
             >
               <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-              <span className="text-sm font-bold tracking-wide">All Projects</span>
+              <span className="text-sm font-bold tracking-wide">{t('portfolio.all_projects', { defaultValue: 'All Projects' })}</span>
             </button>
           </nav>
 
@@ -443,45 +446,40 @@ const ProjectDetails = () => {
           {/* Premium CTA Section */}
           <div className="mt-20">
             <div className={`relative overflow-hidden rounded-3xl p-8 md:p-12 ${drakeMode
-              ? 'bg-gradient-to-br from-blue-600/20 via-[#050A30] to-cyan-500/20 border border-blue-500/30'
-              : 'bg-gradient-to-br from-blue-500 via-blue-600 to-cyan-500 text-white shadow-2xl shadow-blue-500/20'
+              ? 'bg-gradient-to-br from-violet-600/20 via-[#0d0d1a] to-pink-500/20 border border-violet-500/30'
+              : 'bg-gradient-to-br from-violet-600 via-purple-600 to-pink-500 text-white shadow-2xl shadow-violet-500/20'
               }`}>
               {/* Decorative elements */}
               <div className="absolute top-0 right-0 -u-translate-y-1/2 u-translate-x-1/2 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
-              <div className="absolute bottom-0 left-0 u-translate-y-1/2 -u-translate-x-1/2 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+              <div className="absolute bottom-0 left-0 u-translate-y-1/2 -u-translate-x-1/2 w-64 h-64 bg-pink-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
               <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8 text-center lg:text-left">
                 <div className="max-w-2xl">
-                  <h2 className={`text-3xl md:text-4xl font-bold mb-4 tracking-tight ${drakeMode ? 'text-white' : 'text-white'
-                    }`}>
-                    Interested in this project?
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4 tracking-tight text-white">
+                    {t('contact.work_together', { defaultValue: 'Interested in this project?' })}
                   </h2>
-                  <p className={`text-lg md:text-xl ${drakeMode ? 'text-gray-300' : 'text-blue-50'
-                    }`}>
-                    Want to discuss similar projects or have questions about the implementation? Let's build something amazing together.
+                  <p className={`text-lg md:text-xl ${drakeMode ? 'text-gray-300' : 'text-violet-50'}`}>
+                    {t('contact.subtitle', { defaultValue: "Want to discuss similar projects or have questions about the implementation? Let's build something amazing together." })}
                   </p>
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto shrink-0">
                   <Link
-                    to="/"
+                    to="/#contact"
                     className={`inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-bold transition-all duration-300 transform hover:scale-105 active:scale-95 ${drakeMode
-                      ? 'bg-cyan-500 text-[#050A30] hover:bg-cyan-400 shadow-lg shadow-cyan-500/20'
-                      : 'bg-white text-blue-600 hover:bg-blue-50 shadow-xl'
+                      ? 'bg-gradient-to-r from-violet-500 to-pink-500 text-white shadow-lg shadow-violet-500/25'
+                      : 'bg-white text-violet-700 hover:bg-violet-50 shadow-xl'
                       }`}
                   >
                     <MessageSquare className="w-5 h-5" />
-                    Get In Touch
+                    {t('contact.get_in_touch', { defaultValue: 'Get In Touch' })}
                   </Link>
                   <button
                     onClick={handleBack}
-                    className={`inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-bold transition-all duration-300 transform hover:scale-105 active:scale-95 border-2 ${drakeMode
-                      ? 'border-white/20 hover:bg-white/10 text-white backdrop-blur-sm'
-                      : 'border-white/30 hover:bg-white/10 text-white backdrop-blur-sm'
-                      }`}
+                    className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-bold transition-all duration-300 transform hover:scale-105 active:scale-95 border-2 border-white/25 hover:bg-white/10 text-white backdrop-blur-sm"
                   >
                     <Rocket className="w-5 h-5" />
-                    View More Projects
+                    {t('portfolio.view_more', { defaultValue: 'View More Projects' })}
                   </button>
                 </div>
               </div>
@@ -489,6 +487,7 @@ const ProjectDetails = () => {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   )
 }

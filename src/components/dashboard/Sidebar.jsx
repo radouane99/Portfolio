@@ -3,6 +3,7 @@ import {
   Award, 
   FolderKanban, 
   Code,
+  Trophy,
   X,
   LogOut,
   Home
@@ -21,6 +22,12 @@ function Sidebar({ currentPath, onNavigate, onSignOut, user, isMobile = false, o
       label: 'Projects',
       path: '/dashboard/projects',
       icon: FolderKanban,
+    },
+    {
+      id: 'hackathons',
+      label: 'Hackathons',
+      path: '/dashboard/hackathons',
+      icon: Trophy,
     },
     {
       id: 'technologies',

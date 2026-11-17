@@ -8,22 +8,24 @@ import LanguageSwitcher from './LanguageSwitcher';
 import { useTheme } from "../contexts/ThemeContext";
 
 const NAV_ITEMS = [
-  { key: 'Home',         labelKey: 'nav.home',         id: 'home' },
-  { key: 'About',        labelKey: 'nav.about',         id: 'about' },
-  { key: 'Skills',       labelKey: 'nav.skills',        id: 'skills' },
-  { key: 'Certificates', labelKey: 'nav.certificates',  id: 'certificates', external: '/certificates' },
-  { key: 'Contact',      labelKey: 'nav.contact',       id: 'contact' },
+  { key: 'Home', labelKey: 'nav.home', id: 'home' },
+  { key: 'About', labelKey: 'nav.about', id: 'about' },
+  { key: 'Skills', labelKey: 'nav.skills', id: 'skills' },
+  { key: 'Projects', labelKey: 'nav.projects', id: 'projects' },
+  { key: 'Hackathons', labelKey: 'nav.hackathons', id: 'hackathons' },
+  { key: 'Certificates', labelKey: 'nav.certificates', id: 'certificates', external: '/certificates' },
+  { key: 'Contact', labelKey: 'nav.contact', id: 'contact' },
 ];
 
 const Navbar = () => {
   const { isDarkMode: dark, toggleTheme } = useTheme();
   const { t } = useTranslation();
-  const location  = useLocation();
-  const navigate  = useNavigate();
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const [menuOpen,   setMenuOpen]   = useState(false);
-  const [scrolled,   setScrolled]   = useState(false);
-  const [activeNav,  setActiveNav]  = useState('home');
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [activeNav, setActiveNav] = useState('home');
 
   const isHome = location.pathname === '/' || location.pathname === '/Portfolio';
 
@@ -72,15 +74,14 @@ const Navbar = () => {
       <motion.nav
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: [0.16,1,0.3,1] }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className={`w-full fixed top-0 left-0 right-0 z-50 px-6 lg:px-12 xl:px-16 py-4
-          flex items-center justify-between transition-all duration-500 ${
-          scrolled
+          flex items-center justify-between transition-all duration-500 ${scrolled
             ? dark
               ? 'glass border-b border-white/8 shadow-2xl shadow-black/30'
               : 'bg-white/80 backdrop-blur-xl border-b border-violet-100 shadow-lg'
             : 'bg-transparent'
-        }`}
+          }`}
       >
         <a
           href={isHome ? '#home' : '/'}
@@ -90,17 +91,15 @@ const Navbar = () => {
         >
           <div className="relative flex items-center">
             {/* Logo Icon / Bracket style */}
-            <div className={`mr-2 flex items-center justify-center w-9 h-9 rounded-xl border-2 transition-all duration-500 group-hover:rotate-12 ${
-              dark ? 'bg-violet-500/10 border-violet-500/30' : 'bg-violet-50 border-violet-200'
-            }`}>
+            <div className={`mr-2 flex items-center justify-center w-9 h-9 rounded-xl border-2 transition-all duration-500 group-hover:rotate-12 ${dark ? 'bg-violet-500/10 border-violet-500/30' : 'bg-violet-50 border-violet-200'
+              }`}>
               <span className={`font-bold text-xl ${dark ? 'text-violet-400' : 'text-violet-600'}`}>R</span>
             </div>
 
             {/* Logo Text */}
             <div className="flex flex-col leading-tight">
-              <span className={`text-xl font-black tracking-tighter transition-colors duration-300 ${
-                dark ? 'text-white' : 'text-gray-900'
-              }`}>
+              <span className={`text-xl font-black tracking-tighter transition-colors duration-300 ${dark ? 'text-white' : 'text-gray-900'
+                }`}>
                 EL-ASRI
               </span>
               <div className="h-1 w-0 group-hover:w-full bg-gradient-to-r from-violet-500 to-pink-500 transition-all duration-500 rounded-full" />
@@ -121,13 +120,12 @@ const Navbar = () => {
                   href={item.external || (isHome ? `#${item.id}` : `/#${item.id}`)}
                   onClick={(e) => handleLinkClick(e, item)}
                   className={`relative cursor-target px-4 py-2 rounded-full text-sm font-medium
-                    transition-all duration-300 inline-block ${
-                    isActive
+                    transition-all duration-300 inline-block ${isActive
                       ? 'text-white'
                       : dark
                         ? 'text-gray-400 hover:text-white'
                         : 'text-gray-600 hover:text-violet-700'
-                  }`}
+                    }`}
                 >
                   {isActive && (
                     <motion.span

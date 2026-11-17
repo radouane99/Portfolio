@@ -163,7 +163,121 @@ export async function getProjectById(id) {
 
     return { data: projectWithUrl, error: null }
   } catch (error) {
-    console.error('Error fetching project:', error)
+    console.error('Error fetching project, checking fallback:', error)
+    const fallbackMap = {
+      'p1': {
+        id: 'p1',
+        title: 'Modern E-Commerce Platform',
+        tagline: 'Full-featured online shopping experience with secure payments and real-time inventory.',
+        description: 'A scalable full-stack e-commerce platform designed for high conversion and seamless checkout experiences.\n\nIncludes real-time inventory synchronization, role-based admin analytics, and secure Stripe payment processing.',
+        features: ['Secure Payment Gateway', 'Real-time Inventory Management', 'Admin Analytics Dashboard', 'Responsive Mobile-First UI'],
+        duration: '3 Months',
+        team_size: 'Solo / Full-Stack',
+        role: 'Full-Stack Developer',
+        challenges: 'Handling concurrent inventory updates during flash sales without race conditions.',
+        solutions: 'Implemented transactional database locks and optimistic UI updates.',
+        image_url: 'https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&q=80&w=1000',
+        gallery_urls: [],
+        technologies: [{ name: 'React' }, { name: 'Node.js' }, { name: 'Tailwind CSS' }, { name: 'Stripe' }],
+        category: 'fullstack',
+        github_url: 'https://github.com/radouane99',
+        live_url: '#',
+        created_at: '2024-05-01T10:00:00Z'
+      },
+      'fallback-1': {
+        id: 'fallback-1',
+        title: 'Project Management System',
+        tagline: 'High-performance task management platform with real-time collaboration.',
+        description: 'A modern project and task management platform built for agile engineering teams.\n\nFeatures Kanban boards, sprint tracking, automated notifications, and real-time team updates.',
+        features: ['Interactive Kanban Boards', 'Real-time Collaboration', 'Role-Based Access Control', 'Automated Sprint Reports'],
+        duration: '4 Months',
+        team_size: '2 Developers',
+        role: 'Lead Full-Stack Developer',
+        challenges: 'Synchronizing board state across multiple connected team members in real time.',
+        solutions: 'Used Supabase Realtime subscriptions and optimistic state updates in React.',
+        image_url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800',
+        gallery_urls: [],
+        technologies: [{ name: 'React' }, { name: 'Node.js' }, { name: 'Tailwind CSS' }, { name: 'Supabase' }],
+        category: 'fullstack',
+        github_url: 'https://github.com/radouane99',
+        live_url: '#',
+        created_at: '2024-06-15T10:00:00Z'
+      },
+      'p2': {
+        id: 'p2',
+        title: 'AI Portfolio & Content Builder',
+        tagline: 'Intelligent SaaS platform that generates professional portfolios and content using AI.',
+        description: 'An AI-powered SaaS platform leveraging Large Language Models to help developers and creators generate tailored content, portfolios, and SEO-optimized copy in seconds.',
+        features: ['AI Content Generation', 'Live Theme Customizer', 'One-Click Export', 'Multi-language Support'],
+        duration: '2 Months',
+        team_size: 'Solo Developer',
+        role: 'Full-Stack & AI Engineer',
+        challenges: 'Keeping LLM latency low while streaming structured JSON layouts.',
+        solutions: 'Built Edge Functions with streaming responses and client-side schema validation.',
+        image_url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1000',
+        gallery_urls: [],
+        technologies: [{ name: 'Next.js' }, { name: 'TypeScript' }, { name: 'Supabase' }, { name: 'AI API' }],
+        category: 'AI/ML',
+        github_url: 'https://github.com/radouane99',
+        live_url: '#',
+        created_at: '2024-08-10T10:00:00Z'
+      },
+      'fallback-2': {
+        id: 'fallback-2',
+        title: 'AI Content Generator',
+        tagline: 'Advanced AI-powered content creation tool utilizing large language models.',
+        description: 'An AI-powered SaaS platform leveraging Large Language Models to help developers and creators generate tailored content and SEO-optimized copy in seconds.',
+        features: ['Prompt Templates', 'Real-time Streaming', 'Export to Markdown/PDF', 'Usage Analytics'],
+        duration: '2 Months',
+        team_size: 'Solo Developer',
+        role: 'Full-Stack & AI Developer',
+        image_url: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800',
+        gallery_urls: [],
+        technologies: [{ name: 'Python' }, { name: 'Next.js' }, { name: 'Tailwind CSS' }],
+        category: 'AI/ML',
+        github_url: 'https://github.com/radouane99',
+        live_url: '#',
+        created_at: '2024-08-10T10:00:00Z'
+      },
+      'p3': {
+        id: 'p3',
+        title: 'Real-Time Analytics Dashboard',
+        tagline: 'Advanced data visualization dashboard processing events in real time.',
+        description: 'Interactive business intelligence and analytics dashboard designed to visualize key performance indicators, user retention, and conversion funnels.',
+        features: ['Interactive D3.js Charts', 'Custom Date Filtering', 'Automated CSV/PDF Reports', 'Dark/Light Mode'],
+        duration: '3 Months',
+        team_size: '3 Members',
+        role: 'Frontend & Data Visualization Engineer',
+        image_url: 'https://images.unsplash.com/photo-1551288049-bbdac8626ad1?auto=format&fit=crop&q=80&w=1000',
+        gallery_urls: [],
+        technologies: [{ name: 'React' }, { name: 'D3.js' }, { name: 'PostgreSQL' }],
+        category: 'data',
+        github_url: 'https://github.com/radouane99',
+        live_url: '#',
+        created_at: '2023-11-20T10:00:00Z'
+      },
+      'fallback-3': {
+        id: 'fallback-3',
+        title: 'E-commerce Analytics',
+        tagline: 'Real-time data visualization dashboard for tracking sales and user behavior.',
+        description: 'Interactive business intelligence and analytics dashboard designed to visualize key performance indicators, user retention, and conversion funnels.',
+        features: ['Interactive Charts', 'Custom Date Filtering', 'Automated Reports', 'PostgreSQL Aggregation'],
+        duration: '3 Months',
+        team_size: '2 Members',
+        role: 'Full-Stack Developer',
+        image_url: 'https://images.unsplash.com/photo-1551288049-bbdac8626ad1?auto=format&fit=crop&q=80&w=800',
+        gallery_urls: [],
+        technologies: [{ name: 'TypeScript' }, { name: 'D3.js' }, { name: 'PostgreSQL' }],
+        category: 'data',
+        github_url: 'https://github.com/radouane99',
+        live_url: '#',
+        created_at: '2023-11-20T10:00:00Z'
+      }
+    }
+
+    if (fallbackMap[id]) {
+      return { data: fallbackMap[id], error: null }
+    }
     return { data: null, error }
   }
 }

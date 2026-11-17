@@ -12,6 +12,7 @@ import Dashboard from './pages/dashboard/Dashboard.jsx'
 import Certificates from './pages/dashboard/Certificates.jsx'
 import Projects from './pages/dashboard/Projects.jsx'
 import Technologies from './pages/dashboard/Technologies.jsx'
+import Hackathons from './pages/dashboard/Hackathons.jsx'
 import ProtectedRoute from './components/dashboard/ProtectedRoute.jsx'
 import ProjectDetails from './pages/ProjectDetails.jsx'
 
@@ -36,6 +37,7 @@ function App() {
             <Route path="certificates" element={<Certificates />} />
             <Route path="projects" element={<Projects />} />
             <Route path="technologies" element={<Technologies />} />
+            <Route path="hackathons" element={<Hackathons />} />
           </Route>
         </Routes>
       </ThemeProvider>
