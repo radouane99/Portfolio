@@ -206,11 +206,11 @@ const TargetCursor = ({
       className="fixed top-0 left-0 w-0 h-0 pointer-events-none z-[9999]"
       style={{ willChange: 'transform' }}
     >
-      <div className={`absolute left-1/2 top-1/2 w-1 h-1 rounded-full -translate-x-1/2 -translate-y-1/2 ${drakeMode ? 'bg-white' : 'bg-black'}`} />
-      <div className={`target-cursor-corner absolute left-1/2 top-1/2 w-3 h-3 border-[3px] -translate-x-[150%] -translate-y-[150%] border-r-0 border-b-0 ${drakeMode ? 'border-white' : 'border-black'}`} />
-      <div className={`target-cursor-corner absolute left-1/2 top-1/2 w-3 h-3 border-[3px] translate-x-1/2 -translate-y-[150%] border-l-0 border-b-0 ${drakeMode ? 'border-white' : 'border-black'}`} />
-      <div className={`target-cursor-corner absolute left-1/2 top-1/2 w-3 h-3 border-[3px] translate-x-1/2 translate-y-1/2 border-l-0 border-t-0 ${drakeMode ? 'border-white' : 'border-black'}`} />
-      <div className={`target-cursor-corner absolute left-1/2 top-1/2 w-3 h-3 border-[3px] -translate-x-[150%] translate-y-1/2 border-r-0 border-t-0 ${drakeMode ? 'border-white' : 'border-black'}`} />
+      <div className={`absolute left-1/2 top-1/2 w-1.5 h-1.5 rounded-full -translate-x-1/2 -translate-y-1/2 ${drakeMode ? 'bg-violet-400 shadow-[0_0_8px_#a78bfa]' : 'bg-violet-600'}`} />
+      <div className={`target-cursor-corner absolute left-1/2 top-1/2 w-3 h-3 border-[2.5px] -translate-x-[150%] -translate-y-[150%] border-r-0 border-b-0 ${drakeMode ? 'border-violet-400' : 'border-violet-600'}`} />
+      <div className={`target-cursor-corner absolute left-1/2 top-1/2 w-3 h-3 border-[2.5px] translate-x-1/2 -translate-y-[150%] border-l-0 border-b-0 ${drakeMode ? 'border-pink-400' : 'border-pink-500'}`} />
+      <div className={`target-cursor-corner absolute left-1/2 top-1/2 w-3 h-3 border-[2.5px] translate-x-1/2 translate-y-1/2 border-l-0 border-t-0 ${drakeMode ? 'border-violet-400' : 'border-violet-600'}`} />
+      <div className={`target-cursor-corner absolute left-1/2 top-1/2 w-3 h-3 border-[2.5px] -translate-x-[150%] translate-y-1/2 border-r-0 border-t-0 ${drakeMode ? 'border-pink-400' : 'border-pink-500'}`} />
     </div>
   );
 };

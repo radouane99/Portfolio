@@ -18,6 +18,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../contexts/ThemeContext';
 import { getHackathons } from '../services/hackathonsService';
+import SpotlightCard from './SpotlightCard';
 
 export default function Hackathons() {
   const { isDarkMode: dark } = useTheme();
@@ -113,12 +114,18 @@ export default function Hackathons() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  className={`cursor-target group relative rounded-3xl border overflow-hidden flex flex-col transition-all duration-500 hover:-translate-y-2 ${
-                    dark
-                      ? 'bg-white/[0.04] border-white/10 hover:border-violet-500/40 hover:shadow-2xl hover:shadow-violet-500/15'
-                      : 'bg-white border-violet-100 hover:border-violet-300 hover:shadow-2xl hover:shadow-violet-500/10'
-                  }`}
+                  className="h-full"
                 >
+                  <SpotlightCard
+                    maxTilt={4}
+                    spotlightColorDark="rgba(236, 72, 153, 0.18)"
+                    spotlightColorLight="rgba(139, 92, 246, 0.12)"
+                    className={`cursor-target group rounded-3xl border h-full flex flex-col ${
+                      dark
+                        ? 'bg-white/[0.04] border-white/10 hover:border-violet-500/40 hover:shadow-2xl hover:shadow-violet-500/15'
+                        : 'bg-white border-violet-100 hover:border-violet-300 hover:shadow-2xl hover:shadow-violet-500/10'
+                    }`}
+                  >
                   {/* Cover / Certificate Preview + Award Badge */}
                   <div
                     onClick={() => setSelectedCertHackathon(hack)}
@@ -141,6 +148,13 @@ export default function Hackathons() {
                           : 'from-black/60 via-black/20 to-transparent'
                       }`}
                     />
+                    {/* Hover Zoom Overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/30 backdrop-blur-[2px]">
+                      <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold bg-white/95 text-gray-900 shadow-xl transform scale-95 group-hover:scale-100 transition-transform duration-300">
+                        <Eye className="w-4 h-4 text-violet-600" />
+                        {t('hackathons.view_certificate', { defaultValue: 'View Certificate' })}
+                      </span>
+                    </div>
 
                     {/* Award Ribbon */}
                     {award && (
@@ -243,6 +257,7 @@ export default function Hackathons() {
                       )}
                     </div>
                   </div>
+                  </SpotlightCard>
                 </motion.div>
               );
             })}

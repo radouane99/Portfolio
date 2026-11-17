@@ -3,6 +3,7 @@ import { GraduationCap, Briefcase, Calendar, MapPin, Award, Code } from 'lucide-
 import LogoLoop from '../hooks/LogoLoop';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../contexts/ThemeContext';
+import SpotlightCard from './SpotlightCard';
 
 // --- Icônes locales (recommandé: unifier) ---
 import reactIcon from '../assets/img/physics.png';
@@ -242,12 +243,13 @@ const WorkHistory = () => {
 
 
   const Card = ({ children, className = '', ...rest }) => (
-    <div
+    <SpotlightCard
+      maxTilt={2.5}
       {...rest}
-      className={`cursor-target rounded-2xl border backdrop-blur-sm transition-all duration-400 ${className}`}
+      className={`cursor-target rounded-2xl border backdrop-blur-sm ${className}`}
     >
       {children}
-    </div>
+    </SpotlightCard>
   );
 
   const TechStack = ({ technologies }) => (
@@ -315,15 +317,19 @@ const WorkHistory = () => {
               </h3>
             </div>
 
-            <div className="space-y-8">
+            <div className="relative pl-6 border-l-2 border-violet-500/30 space-y-8">
               {experiences.map((exp, index) => {
                 const companyLogo = getCompanyLogo(exp.company);
                 return (
-                  <Card
-                    key={`${exp.role}-${exp.company}`}
-                    className={`card-hover reveal ${isDarkMode ? 'bg-white/4 border-white/8 card-hover-dark text-white' : 'bg-white border-violet-100 card-hover-light text-gray-900'}`}
-                    style={{ transitionDelay: `${index * 80}ms` }}
-                  >
+                  <div key={`${exp.role}-${exp.company}`} className="relative">
+                    {/* Glowing Timeline Node */}
+                    <span className={`absolute -left-[31px] top-7 w-3.5 h-3.5 rounded-full border-2 ${
+                      isDarkMode ? 'bg-violet-500 border-[#08080f] shadow-[0_0_12px_#8b5cf6]' : 'bg-violet-600 border-white shadow'
+                    }`} />
+                    <Card
+                      className={`card-hover reveal ${isDarkMode ? 'bg-white/4 border-white/8 card-hover-dark text-white' : 'bg-white border-violet-100 card-hover-light text-gray-900'}`}
+                      style={{ transitionDelay: `${index * 80}ms` }}
+                    >
                     {/* Header with Company Logo */}
                     <div className={`p-6 border-b ${isDarkMode ? 'border-white/8' : 'border-violet-100'}`}>
                       <div className="flex items-start gap-4 mb-3">
@@ -384,6 +390,7 @@ const WorkHistory = () => {
                       </div>
                     </div>
                   </Card>
+                  </div>
                 );
               })}
             </div>
@@ -400,12 +407,16 @@ const WorkHistory = () => {
               </h3>
             </div>
 
-            <div className="space-y-8">
+            <div className="relative pl-6 border-l-2 border-pink-500/30 space-y-8">
               {(showAllEducation ? education : education.slice(0, 3)).map((edu, index) => {
                 const institutionLogo = getCompanyLogo(edu.institution);
                 return (
+                <div key={`${edu.degree}-${edu.institution}`} className="relative">
+                  {/* Glowing Timeline Node */}
+                  <span className={`absolute -left-[31px] top-7 w-3.5 h-3.5 rounded-full border-2 ${
+                    isDarkMode ? 'bg-pink-500 border-[#08080f] shadow-[0_0_12px_#ec4899]' : 'bg-pink-600 border-white shadow'
+                  }`} />
                 <Card
-                  key={`${edu.degree}-${edu.institution}`}
                   className={`card-hover reveal visible ${isDarkMode ? 'bg-white/4 border-white/8 card-hover-dark text-white' : 'bg-white border-violet-100 card-hover-light text-gray-900'}`}
                   style={{ transitionDelay: `${index * 80}ms` }}
                 >
@@ -469,6 +480,7 @@ const WorkHistory = () => {
                     </div>
                   </div>
                 </Card>
+                </div>
               );
               })}
             </div>

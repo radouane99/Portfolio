@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Code2, Server, ShieldCheck, Wrench, Sparkles, Layers } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../contexts/ThemeContext';
+import SpotlightCard from './SpotlightCard';
 
 import reactIcon from '../assets/img/physics.png';
 import javascriptIcon from '../assets/img/js.png';
@@ -158,12 +159,15 @@ export default function TechSkills() {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9, y: 10 }}
                 transition={{ duration: 0.3 }}
-                className={`cursor-target group relative rounded-2xl p-5 border transition-all duration-300 hover:-translate-y-1 ${
-                  dark
-                    ? 'bg-white/[0.04] border-white/10 hover:border-violet-500/40 hover:bg-white/[0.06] hover:shadow-xl hover:shadow-violet-500/10'
-                    : 'bg-white border-violet-100 hover:border-violet-300 hover:shadow-xl hover:shadow-violet-500/10'
-                }`}
               >
+                <SpotlightCard
+                  maxTilt={6}
+                  className={`cursor-target group rounded-2xl p-5 border h-full ${
+                    dark
+                      ? 'bg-white/[0.04] border-white/10 hover:border-violet-500/40 hover:shadow-xl hover:shadow-violet-500/10'
+                      : 'bg-white border-violet-100 hover:border-violet-300 hover:shadow-xl hover:shadow-violet-500/10'
+                  }`}
+                >
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3.5">
                     <div
@@ -210,6 +214,7 @@ export default function TechSkills() {
                     className="h-full rounded-full bg-gradient-to-r from-violet-500 via-purple-500 to-pink-500"
                   />
                 </div>
+                </SpotlightCard>
               </motion.div>
             ))}
           </AnimatePresence>

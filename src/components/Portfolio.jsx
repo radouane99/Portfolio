@@ -9,6 +9,7 @@ import Hackathons from './Hackathons.jsx'
 import Contact from './Contact.jsx'
 import Preloader from './Preloader.jsx'
 import ChatBot from './ChatBot.jsx'
+import InteractiveBackground from './InteractiveBackground.jsx'
 import TargetCursor from '../hooks/TargetCursor'
 import { useTheme } from '../contexts/ThemeContext'
 
@@ -88,6 +89,9 @@ function Portfolio() {
     }}>
       {/* Scroll progress bar */}
       <div id="scroll-progress" />
+
+      {/* Interactive ambient mouse spotlight & floating particles */}
+      <InteractiveBackground />
 
       {/* Custom cursor */}
       <TargetCursor spinDuration={2} hideDefaultCursor={true} />

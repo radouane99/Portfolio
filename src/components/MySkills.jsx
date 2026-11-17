@@ -6,6 +6,7 @@ import { SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiNodedotjs, SiMongo
 import { useTranslation } from 'react-i18next';
 import { getProjects } from '../services/projectsService';
 import { useTheme } from '../contexts/ThemeContext';
+import SpotlightCard from './SpotlightCard';
 
 // Import your local images
 import healthcareImage from '../assets/img/Healthcare.jpg';
@@ -189,7 +190,8 @@ const ProjectsSection = () => {
     const highlights = project.highlights || [];
 
     return (
-      <div
+      <SpotlightCard
+        maxTilt={4}
         className={`cursor-target group relative rounded-3xl border overflow-hidden h-full flex flex-col card-hover ${drakeMode
           ? 'bg-white/4 border-white/8 card-hover-dark'
           : 'bg-white border-violet-100 card-hover-light'
@@ -392,7 +394,7 @@ const ProjectsSection = () => {
           ? 'shadow-2xl shadow-cyan-500/10'
           : 'shadow-2xl shadow-blue-500/5'
           }`}></div>
-      </div>
+      </SpotlightCard>
     );
   };
 

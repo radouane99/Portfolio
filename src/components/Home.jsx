@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { Trophy, Sparkles, Terminal } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../contexts/ThemeContext';
 import profileImage from '../assets/img/Radouane.jpg';
@@ -17,16 +18,16 @@ function useTypingEffect(texts, speed = 80, pause = 2000) {
     let timer;
     if (!deleting) {
       if (charIdx < current.length) {
-        timer = setTimeout(() => setCharIdx(c => c + 1), speed);
+        timer = setTimeout(() => setCharIdx((c) => c + 1), speed);
       } else {
         timer = setTimeout(() => setDeleting(true), pause);
       }
     } else {
       if (charIdx > 0) {
-        timer = setTimeout(() => setCharIdx(c => c - 1), speed / 2);
+        timer = setTimeout(() => setCharIdx((c) => c - 1), speed / 2);
       } else {
         setDeleting(false);
-        setTextIdx(i => (i + 1) % texts.length);
+        setTextIdx((i) => (i + 1) % texts.length);
       }
     }
     setDisplay(current.slice(0, charIdx));
@@ -34,6 +35,52 @@ function useTypingEffect(texts, speed = 80, pause = 2000) {
   }, [charIdx, deleting, textIdx, texts, speed, pause]);
 
   return display;
+}
+
+// ── Animated Counter Stat Badge ─────────────────────────────────────
+function StatBadge({ targetNumber, suffix = '+', label, dark, onClick, highlight = false }) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let current = 0;
+    const stepTime = Math.max(Math.floor(1200 / targetNumber), 60);
+    const timer = setInterval(() => {
+      current += 1;
+      if (current >= targetNumber) {
+        setCount(targetNumber);
+        clearInterval(timer);
+      } else {
+        setCount(current);
+      }
+    }, stepTime);
+    return () => clearInterval(timer);
+  }, [targetNumber]);
+
+  return (
+    <motion.div
+      whileHover={{ y: -4, scale: 1.04 }}
+      onClick={onClick}
+      className={`cursor-target text-center px-4 py-3 rounded-2xl transition-all duration-300 ${
+        onClick ? 'cursor-pointer' : ''
+      } ${
+        highlight
+          ? dark
+            ? 'bg-gradient-to-br from-violet-500/20 to-pink-500/15 border border-violet-500/40 shadow-lg shadow-violet-500/10'
+            : 'bg-gradient-to-br from-violet-50 to-pink-50 border border-violet-300 shadow-sm'
+          : dark
+            ? 'bg-white/5 border border-white/10 hover:border-violet-500/40'
+            : 'bg-white/80 border border-violet-200 hover:border-violet-400 shadow-sm'
+      }`}
+    >
+      <div className="text-2xl font-bold grad-text font-head">
+        {count}
+        {suffix}
+      </div>
+      <div className={`text-xs mt-0.5 font-medium ${dark ? 'text-gray-300' : 'text-gray-600'}`}>
+        {label}
+      </div>
+    </motion.div>
+  );
 }
 
 // ── Animated floating orb ───────────────────────────────────────────
@@ -48,21 +95,9 @@ function FloatingOrb({ style, className }) {
   );
 }
 
-// ── Stat counter ────────────────────────────────────────────────────
-function StatBadge({ value, label, dark }) {
-  return (
-    <div className={`text-center px-4 py-3 rounded-2xl ${dark
-      ? 'bg-white/5 border border-white/10'
-      : 'bg-white/60 border border-violet-200'}`}>
-      <div className={`text-2xl font-bold grad-text font-head`}>{value}</div>
-      <div className={`text-xs mt-0.5 ${dark ? 'text-gray-400' : 'text-gray-600'}`}>{label}</div>
-    </div>
-  );
-}
-
 // ── Scroll helper ───────────────────────────────────────────────────
 const scrollTo = (e, id) => {
-  e.preventDefault();
+  if (e?.preventDefault) e.preventDefault();
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 };
 
@@ -70,6 +105,8 @@ const scrollTo = (e, id) => {
 export default function Home() {
   const { isDarkMode: dark } = useTheme();
   const { t } = useTranslation();
+  const avatarCardRef = useRef(null);
+  const [avatarTilt, setAvatarTilt] = useState({ rotateX: 0, rotateY: 0 });
 
   const roles = [
     t('home.role_dev'),
@@ -79,41 +116,61 @@ export default function Home() {
   ];
   const typed = useTypingEffect(roles, 75, 2200);
 
+  const handleAvatarMouseMove = (e) => {
+    if (!avatarCardRef.current) return;
+    const rect = avatarCardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    setAvatarTilt({
+      rotateX: (-y / (rect.height / 2)) * 10,
+      rotateY: (x / (rect.width / 2)) * 10,
+    });
+  };
+
+  const handleAvatarMouseLeave = () => {
+    setAvatarTilt({ rotateX: 0, rotateY: 0 });
+  };
+
   // Stagger variants
-  const container = { hidden: {}, show: { transition: { staggerChildren: 0.12 } } };
+  const container = { hidden: {}, show: { transition: { staggerChildren: 0.11 } } };
   const item = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 28 },
     show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
   };
 
   return (
-    <div className={`relative min-h-screen flex items-center overflow-hidden
-      ${dark ? 'hero-bg-dark' : 'hero-bg-light'}`}>
-
+    <div
+      className={`relative min-h-screen flex items-center overflow-hidden ${
+        dark ? 'hero-bg-dark' : 'hero-bg-light'
+      }`}
+    >
       {/* ── Background decorative orbs ── */}
       <FloatingOrb
         className="absolute w-[500px] h-[500px] rounded-full pointer-events-none"
         style={{
-          top: '-15%', right: '-10%',
+          top: '-15%',
+          right: '-10%',
           background: dark
-            ? 'radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%)'
-            : 'radial-gradient(circle, rgba(139,92,246,0.08) 0%, transparent 70%)',
+            ? 'radial-gradient(circle, rgba(139,92,246,0.16) 0%, transparent 70%)'
+            : 'radial-gradient(circle, rgba(139,92,246,0.09) 0%, transparent 70%)',
           filter: 'blur(40px)',
         }}
       />
       <FloatingOrb
         className="absolute w-[400px] h-[400px] rounded-full pointer-events-none"
         style={{
-          bottom: '-10%', left: '-8%',
+          bottom: '-10%',
+          left: '-8%',
           background: dark
-            ? 'radial-gradient(circle, rgba(236,72,153,0.12) 0%, transparent 70%)'
-            : 'radial-gradient(circle, rgba(236,72,153,0.06) 0%, transparent 70%)',
+            ? 'radial-gradient(circle, rgba(236,72,153,0.13) 0%, transparent 70%)'
+            : 'radial-gradient(circle, rgba(236,72,153,0.07) 0%, transparent 70%)',
           filter: 'blur(50px)',
         }}
       />
 
       {/* ── Grid dot texture ── */}
-      <div className="absolute inset-0 pointer-events-none"
+      <div
+        className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage: dark
             ? 'radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px)'
@@ -125,7 +182,6 @@ export default function Home() {
       {/* ── Content ── */}
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-10 py-28 md:py-32">
         <div className="flex flex-col-reverse md:flex-row items-center gap-12 md:gap-16">
-
           {/* Left – Text */}
           <motion.div
             className="flex-1 text-center md:text-left"
@@ -133,50 +189,98 @@ export default function Home() {
             initial="hidden"
             animate="show"
           >
-            {/* Badge */}
-            <motion.div variants={item} className="mb-5 inline-block">
-              <span className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase border
-                ${dark
-                  ? 'glass border-violet-500/30 text-violet-300'
-                  : 'bg-violet-50 border-violet-200 text-violet-700'}`}>
+            {/* Status Badge */}
+            <motion.div variants={item} className="mb-5 inline-flex flex-wrap items-center justify-center md:justify-start gap-2">
+              <span
+                className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase border ${
+                  dark
+                    ? 'glass border-violet-500/30 text-violet-300'
+                    : 'bg-violet-50 border-violet-200 text-violet-700'
+                }`}
+              >
                 <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse inline-block" />
                 {t('home.available')}
               </span>
+
+              <a
+                href="#hackathons"
+                onClick={(e) => scrollTo(e, 'hackathons')}
+                className={`cursor-target inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold border transition-all duration-300 hover:scale-105 ${
+                  dark
+                    ? 'bg-amber-500/15 border-amber-400/30 text-amber-300 hover:bg-amber-500/25'
+                    : 'bg-amber-50 border-amber-200 text-amber-700 hover:bg-amber-100'
+                }`}
+              >
+                <Trophy className="w-3.5 h-3.5 text-amber-400" />
+                NASA Space Apps & Gemma AI
+              </a>
             </motion.div>
 
             {/* Greeting */}
-            <motion.p variants={item}
-              className={`text-base font-medium mb-2 ${dark ? 'text-gray-400' : 'text-gray-600'}`}>
+            <motion.p
+              variants={item}
+              className={`text-base font-medium mb-2 ${dark ? 'text-gray-400' : 'text-gray-600'}`}
+            >
               {t('home.greeting', { defaultValue: "Hi, I'm" })} 👋
             </motion.p>
 
             {/* Name */}
-            <motion.h1 variants={item}
-              className="font-head font-bold text-5xl md:text-6xl xl:text-7xl leading-tight mb-4">
+            <motion.h1
+              variants={item}
+              className="font-head font-bold text-5xl md:text-6xl xl:text-7xl leading-tight mb-4"
+            >
               <span className={dark ? 'text-white' : 'text-gray-900'}>Radouane</span>{' '}
               <span className="grad-text">El-ASRI</span>
             </motion.h1>
 
             {/* Typed role */}
-            <motion.div variants={item} className="mb-6 h-9 md:h-10">
-              <span className={`text-xl md:text-2xl font-mono font-medium ${dark ? 'text-violet-300' : 'text-violet-700'} typing-cursor`}>
+            <motion.div variants={item} className="mb-5 h-9 md:h-10">
+              <span
+                className={`text-xl md:text-2xl font-mono font-medium ${
+                  dark ? 'text-violet-300' : 'text-violet-700'
+                } typing-cursor`}
+              >
                 {typed}
               </span>
             </motion.div>
 
             {/* Bio */}
-            <motion.p variants={item}
-              className={`max-w-lg mx-auto md:mx-0 text-base leading-relaxed mb-8
-                ${dark ? 'text-gray-400' : 'text-gray-600'}`}>
+            <motion.p
+              variants={item}
+              className={`max-w-lg mx-auto md:mx-0 text-base leading-relaxed mb-6 ${
+                dark ? 'text-gray-300' : 'text-gray-600'
+              }`}
+            >
               {t('home.intro', {
                 defaultValue:
-                  'Computer Engineering student crafting modern web experiences — React, Node.js & beyond. Turning ideas into elegant, scalable products.'
+                  'Computer Engineering student crafting modern web experiences — React, Node.js & beyond. Turning ideas into elegant, scalable products.',
               })}
             </motion.p>
 
+            {/* Interactive Mini Terminal Pill */}
+            <motion.div
+              variants={item}
+              className={`hidden sm:inline-flex items-center gap-2.5 px-4 py-2 rounded-xl font-mono text-xs mb-8 border ${
+                dark
+                  ? 'bg-white/[0.03] border-white/10 text-gray-300'
+                  : 'bg-white/90 border-violet-200 text-gray-700 shadow-sm'
+              }`}
+            >
+              <Terminal className="w-3.5 h-3.5 text-violet-400 shrink-0" />
+              <span>
+                <span className="text-pink-400">const</span>{' '}
+                <span className="text-violet-400">focus</span> = [
+                <span className="text-emerald-400">&apos;Full-Stack&apos;</span>,{' '}
+                <span className="text-cyan-400">&apos;AI/LLMs&apos;</span>,{' '}
+                <span className="text-amber-400">&apos;ISTQB® QA&apos;</span>];
+              </span>
+            </motion.div>
+
             {/* CTA Buttons */}
-            <motion.div variants={item}
-              className="flex flex-wrap justify-center md:justify-start gap-3 mb-10">
+            <motion.div
+              variants={item}
+              className="flex flex-wrap justify-center md:justify-start gap-3 mb-9"
+            >
               <a
                 href="#contact"
                 onClick={(e) => scrollTo(e, 'contact')}
@@ -186,46 +290,91 @@ export default function Home() {
                   animate-gradient transition-all duration-300"
               >
                 {t('home.contact_button')}
-                <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <svg
+                  className="w-4 h-4 ml-1"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </a>
               <a
                 href={resumePDF}
                 download="Radouane-ELASRI_CV.pdf"
-                className={`btn-magnetic cursor-target px-7 py-3.5 rounded-full font-semibold text-sm border-2 transition-all duration-300
-                  ${dark
+                className={`btn-magnetic cursor-target px-7 py-3.5 rounded-full font-semibold text-sm border-2 transition-all duration-300 ${
+                  dark
                     ? 'border-violet-500/50 text-violet-300 hover:bg-violet-500/10 hover:border-violet-400'
-                    : 'border-violet-300 text-violet-700 hover:bg-violet-50 hover:border-violet-500'}`}
+                    : 'border-violet-300 text-violet-700 hover:bg-violet-50 hover:border-violet-500'
+                }`}
               >
                 {t('home.resume_button')}
-                <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                <svg
+                  className="w-4 h-4 ml-1"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                  />
                 </svg>
               </a>
             </motion.div>
 
-            {/* Stats */}
-            <motion.div variants={item}
-              className="flex flex-wrap justify-center md:justify-start gap-3 mb-8">
-              <StatBadge value="7+" label={t('home.stat_exp')} dark={dark} />
-              <StatBadge value="10+" label={t('home.stat_projects')} dark={dark} />
-              <StatBadge value="5+" label={t('home.stat_tech')} dark={dark} />
+            {/* Animated Stats */}
+            <motion.div
+              variants={item}
+              className="grid grid-cols-2 sm:flex sm:flex-wrap justify-center md:justify-start gap-3 mb-8"
+            >
+              <StatBadge
+                targetNumber={5}
+                label={t('home.stat_exp')}
+                dark={dark}
+                onClick={(e) => scrollTo(e, 'about')}
+              />
+              <StatBadge
+                targetNumber={10}
+                label={t('home.stat_projects')}
+                dark={dark}
+                onClick={(e) => scrollTo(e, 'projects')}
+              />
+              <StatBadge
+                targetNumber={2}
+                suffix=" 🏆"
+                label={t('nav.hackathons', { defaultValue: 'Hackathons' })}
+                dark={dark}
+                highlight
+                onClick={(e) => scrollTo(e, 'hackathons')}
+              />
+              <StatBadge
+                targetNumber={18}
+                label={t('home.stat_tech')}
+                dark={dark}
+                onClick={(e) => scrollTo(e, 'skills')}
+              />
             </motion.div>
 
             {/* Social links */}
-            <motion.div variants={item}
-              className="flex justify-center md:justify-start gap-3">
+            <motion.div variants={item} className="flex justify-center md:justify-start gap-3">
               {[
                 {
                   href: 'https://github.com/radouane99',
                   label: 'GitHub',
-                  icon: <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />,
+                  icon: (
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                  ),
                 },
                 {
                   href: 'https://linkedin.com/in/radouane-elasri',
                   label: 'LinkedIn',
-                  icon: <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />,
+                  icon: (
+                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                  ),
                 },
               ].map(({ href, label, icon }) => (
                 <a
@@ -234,55 +383,89 @@ export default function Home() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={label}
-                  className={`cursor-target p-2.5 rounded-xl border transition-all duration-300 hover:-translate-y-1
-                    ${dark
-                      ? 'glass border-white/10 text-gray-400 hover:text-violet-300 hover:border-violet-500/40'
-                      : 'bg-white/70 border-violet-200 text-gray-600 hover:text-violet-600 hover:border-violet-400'}`}
+                  className={`cursor-target p-3 rounded-xl border transition-all duration-300 hover:-translate-y-1.5 hover:scale-105 ${
+                    dark
+                      ? 'glass border-white/10 text-gray-300 hover:text-violet-300 hover:border-violet-500/40 hover:shadow-lg hover:shadow-violet-500/20'
+                      : 'bg-white/80 border-violet-200 text-gray-600 hover:text-violet-600 hover:border-violet-400 shadow-sm'
+                  }`}
                 >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">{icon}</svg>
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    {icon}
+                  </svg>
                 </a>
               ))}
             </motion.div>
           </motion.div>
 
-          {/* Right – Profile image */}
+          {/* Right – 3D Interactive Profile Image & Floating Badges */}
           <motion.div
             className="flex-shrink-0 flex justify-center"
             initial={{ opacity: 0, scale: 0.85, rotate: -4 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
           >
-            <div className="relative">
-              {/* Spinning ring */}
+            <div
+              ref={avatarCardRef}
+              onMouseMove={handleAvatarMouseMove}
+              onMouseLeave={handleAvatarMouseLeave}
+              style={{
+                transform: `perspective(900px) rotateX(${avatarTilt.rotateX.toFixed(2)}deg) rotateY(${avatarTilt.rotateY.toFixed(2)}deg)`,
+                transition: 'transform 0.2s ease-out',
+              }}
+              className="relative cursor-target"
+            >
+              {/* Outer Ambient Aura */}
+              <div
+                className="absolute -inset-8 rounded-full pointer-events-none blur-2xl opacity-50"
+                style={{
+                  background: 'radial-gradient(circle, rgba(139,92,246,0.45) 0%, rgba(236,72,153,0.3) 50%, transparent 75%)',
+                }}
+              />
+
+              {/* Spinning Conic Ring */}
               <motion.div
                 className="absolute -inset-4 rounded-full"
                 style={{
                   background: 'conic-gradient(from 0deg, #8b5cf6, #ec4899, #06b6d4, #8b5cf6)',
-                  padding: '2px',
-                  opacity: 0.7,
+                  padding: '2.5px',
+                  opacity: 0.8,
                 }}
                 animate={{ rotate: 360 }}
-                transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
+                transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
               >
-                <div className={`w-full h-full rounded-full ${dark ? 'bg-[#08080f]' : 'bg-[#f3f0ff]'}`} />
+                <div
+                  className={`w-full h-full rounded-full ${
+                    dark ? 'bg-[#08080f]' : 'bg-[#f3f0ff]'
+                  }`}
+                />
               </motion.div>
 
+              {/* Dashed Orbit Ring */}
+              <motion.div
+                className={`absolute -inset-8 rounded-full border border-dashed pointer-events-none ${
+                  dark ? 'border-violet-500/30' : 'border-violet-400/40'
+                }`}
+                animate={{ rotate: -360 }}
+                transition={{ duration: 28, repeat: Infinity, ease: 'linear' }}
+              />
+
               {/* Profile photo */}
-              <div className="relative z-10 w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-full overflow-hidden
-                border-4 border-transparent"
-                style={{ background: 'linear-gradient(135deg, #8b5cf6, #ec4899) border-box' }}>
+              <div
+                className="relative z-10 w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-transparent shadow-2xl"
+                style={{ background: 'linear-gradient(135deg, #8b5cf6, #ec4899) border-box' }}
+              >
                 <img
                   src={profileImage}
                   alt="Radouane EL-ASRI"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                 />
               </div>
 
               {/* Floating badge – top right */}
               <motion.div
-                className={`absolute -top-3 -right-3 z-20 px-3 py-1.5 rounded-xl text-xs font-bold
-                  bg-gradient-to-r from-violet-500 to-pink-500 text-white shadow-lg`}
-                animate={{ y: [0, -6, 0] }}
+                className="absolute -top-3 -right-3 z-20 px-3.5 py-1.5 rounded-xl text-xs font-bold
+                  bg-gradient-to-r from-violet-500 to-pink-500 text-white shadow-xl shadow-violet-500/30"
+                animate={{ y: [0, -7, 0] }}
                 transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
               >
                 🎓 {t('home.eng_student')}
@@ -290,13 +473,41 @@ export default function Home() {
 
               {/* Floating badge – bottom left */}
               <motion.div
-                className={`absolute -bottom-3 -left-3 z-20 px-3 py-1.5 rounded-xl text-xs font-bold
-                  ${dark ? 'bg-cyan-500/20 border border-cyan-500/40 text-cyan-300'
-                    : 'bg-cyan-50 border border-cyan-200 text-cyan-700'}`}
-                animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+                className={`absolute -bottom-3 -left-3 z-20 px-3.5 py-1.5 rounded-xl text-xs font-bold backdrop-blur-md shadow-lg ${
+                  dark
+                    ? 'bg-cyan-500/20 border border-cyan-500/40 text-cyan-300'
+                    : 'bg-cyan-50 border border-cyan-200 text-cyan-700'
+                }`}
+                animate={{ y: [0, -7, 0] }}
+                transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}
               >
                 ⚡ {t('home.fullstack')}
+              </motion.div>
+
+              {/* Floating badge – bottom right (NASA Space Apps) */}
+              <motion.div
+                className={`absolute -bottom-2 -right-5 z-20 px-3 py-1.5 rounded-xl text-[11px] font-bold backdrop-blur-md shadow-lg flex items-center gap-1 ${
+                  dark
+                    ? 'bg-amber-500/20 border border-amber-400/40 text-amber-300'
+                    : 'bg-amber-50 border border-amber-300 text-amber-800'
+                }`}
+                animate={{ y: [0, 6, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1.4 }}
+              >
+                🚀 NASA Space Apps
+              </motion.div>
+
+              {/* Floating badge – top left (ISTQB) */}
+              <motion.div
+                className={`absolute top-4 -left-6 z-20 px-3 py-1.5 rounded-xl text-[11px] font-bold backdrop-blur-md shadow-lg flex items-center gap-1 ${
+                  dark
+                    ? 'bg-emerald-500/20 border border-emerald-400/40 text-emerald-300'
+                    : 'bg-emerald-50 border border-emerald-300 text-emerald-800'
+                }`}
+                animate={{ y: [0, -5, 0] }}
+                transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
+              >
+                <Sparkles className="w-3 h-3" /> ISTQB® Certified
               </motion.div>
             </div>
           </motion.div>
@@ -307,11 +518,21 @@ export default function Home() {
           className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 0.8 }}
+          transition={{ delay: 1.2, duration: 0.8 }}
         >
-          <span className={`text-xs tracking-widest uppercase ${dark ? 'text-gray-500' : 'text-gray-400'}`}>{t('home.scroll')}</span>
+          <span
+            className={`text-xs tracking-widest uppercase ${
+              dark ? 'text-gray-500' : 'text-gray-400'
+            }`}
+          >
+            {t('home.scroll')}
+          </span>
           <motion.div
-            className={`w-0.5 h-8 rounded-full ${dark ? 'bg-gradient-to-b from-violet-500 to-transparent' : 'bg-gradient-to-b from-violet-400 to-transparent'}`}
+            className={`w-0.5 h-8 rounded-full ${
+              dark
+                ? 'bg-gradient-to-b from-violet-500 to-transparent'
+                : 'bg-gradient-to-b from-violet-400 to-transparent'
+            }`}
             animate={{ scaleY: [0, 1, 0], originY: 0 }}
             transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
           />
