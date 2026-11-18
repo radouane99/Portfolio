@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom'
 import Navbar from './Navbar.jsx'
 import Home from './Home.jsx'
 import About from './About.jsx'
+import EngineeringBento from './EngineeringBento.jsx'
 import TechSkills from './TechSkills.jsx'
 import MySkills from './MySkills.jsx'
 import Hackathons from './Hackathons.jsx'
@@ -104,6 +105,9 @@ function Portfolio() {
         </section>
         <section id="about" className="min-h-screen">
           <About />
+        </section>
+        <section id="engineering">
+          <EngineeringBento />
         </section>
         <section id="skills">
           <TechSkills />

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
+import { useTheme } from '../../contexts/ThemeContext'
 import { Mail, Lock, LogIn } from 'lucide-react'
 
 import logoLight from "../../assets/img/2.png"
@@ -13,7 +14,7 @@ function Login() {
   const [loading, setLoading] = useState(false)
   const { signIn, user } = useAuth()
   const navigate = useNavigate()
-  const [darkMode] = useState(false)
+  const { isDarkMode: darkMode } = useTheme()
 
   useEffect(() => {
     if (user) {

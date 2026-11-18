@@ -5,6 +5,7 @@ import logoLight from "../assets/img/1.png";
 import logoDark from "../assets/img/2.png";
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
+import CommandPalette from './CommandPalette';
 import { useTheme } from "../contexts/ThemeContext";
 
 const NAV_ITEMS = [
@@ -24,6 +25,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const [cmdOpen, setCmdOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeNav, setActiveNav] = useState('home');
 
@@ -143,6 +145,21 @@ const Navbar = () => {
 
         {/* Right Controls */}
         <div className="flex items-center gap-2">
+          {/* Command Palette Trigger (Ctrl+K) */}
+          <button
+            type="button"
+            onClick={() => setCmdOpen(true)}
+            aria-label="Open command palette"
+            title="Quick Command Palette (Ctrl+K)"
+            className={`cursor-target hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border text-xs font-mono font-semibold transition-all duration-300 hover:scale-105 ${
+              dark
+                ? 'glass border-white/10 text-gray-300 hover:text-violet-300 hover:border-violet-400/50'
+                : 'bg-white/70 border-violet-100 text-gray-600 hover:text-violet-700 hover:border-violet-300'
+            }`}
+          >
+            <span>⌘K</span>
+          </button>
+
           {/* Theme toggle */}
           <button
             onClick={toggleTheme}
@@ -271,6 +288,12 @@ const Navbar = () => {
           </>
         )}
       </AnimatePresence>
+
+      {/* Global Command Palette (Ctrl+K) */}
+      <CommandPalette
+        isOpen={cmdOpen}
+        onClose={(val) => setCmdOpen(typeof val === 'boolean' ? val : false)}
+      />
     </>
   );
 };

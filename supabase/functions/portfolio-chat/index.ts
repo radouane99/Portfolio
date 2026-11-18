@@ -64,7 +64,8 @@ Deno.serve(async (req: Request) => {
 
 🏆 HACKATHONS & COMPETITIONS:
 - 2026 NASA Space Apps Challenge (November 14–15, 2026): Awarded "Galactic Problem Solver" by NASA (signed by Marc Kuchner, Program Scientist) for outstanding efforts addressing challenges on Earth and in space.
-- Build with Gemma Hackathon (July 26, 2026): Organized by GDGC ENSAB, sponsored by Google Gemma Team in collaboration with AI Crafters — Developed efficient AI solutions using lightweight open-weight Gemma models.
+- Build with Gemma Hackathon (July 26, 2026 • Technopark Casablanca): 1st Place & Certified — Organized by GDGC ENSAB, sponsored by Google Gemma Team in collaboration with AI Crafters, developing efficient AI solutions using lightweight open-weight Gemma models.
+- Rally IA Future Lab / RallyIA Hackathon (June 16–20, 2026 • Merzouga, Morocco): National AI hackathon under High Royal Patronage ("AI Made in Morocco" initiative by the Ministry of Digital Transition), prototyping sovereign AI solutions.
 
 🛠️ TECHNICAL SKILLS:
 Frontend: React.js, TypeScript, JavaScript (ES6+), Tailwind CSS, Angular, Framer Motion, Figma UI/UX

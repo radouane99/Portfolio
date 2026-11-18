@@ -9,7 +9,7 @@ const KNOWLEDGE_BASE = {
   en: {
     skills: "Radouane is a Full-Stack Developer & ISTQB® Certified Tester skilled in React, TypeScript, Node.js, Python (Selenium), Supabase, PostgreSQL, Spring Boot, and Docker.",
     projects: "He has built full-stack platforms including academic digitalization portals, e-commerce analytics, and AI SaaS tools. Check out the Projects section for live demos!",
-    hackathons: "Radouane earned the 'Galactic Problem Solver' certification in the 2026 NASA Space Apps Challenge (Nov 2026) and excelled in the Build with Gemma Hackathon (July 2026) organized by GDGC ENSAB, Google Gemma Team & AI Crafters!",
+    hackathons: "Radouane excelled in 3 major hackathons in 2026: 'Galactic Problem Solver' at the 2026 NASA Space Apps Challenge, 1st Place & Certified at the Build with Gemma Hackathon (Technopark Casablanca — Google Gemma & AI Crafters), and selected participant at the national Rally IA Future Lab hackathon in Merzouga!",
     experience: "He works as a Specialized Technician in Development at ENS Fez (since Sept 2024), previously spent 4+ years at E-Market Solutions in Python/JS automation, and is pursuing his State Engineering degree in Computer Engineering at UPF.",
     contact: "You can reach Radouane via the contact form on this page, email him at radouane.elasri@usmba.ac.ma, or call +212 609365349.",
     default: "I can tell you all about Radouane's skills, projects, hackathons & awards, professional experience, or how to contact him!"
@@ -17,7 +17,7 @@ const KNOWLEDGE_BASE = {
   fr: {
     skills: "Radouane est un développeur Full-Stack et certifié ISTQB®, expert en React, TypeScript, Node.js, Python (Selenium), Supabase, PostgreSQL, Spring Boot et Docker.",
     projects: "Il a réalisé plusieurs projets Full-Stack et IA, notamment des plateformes académiques, e-commerce et des tableaux de bord analytiques. Découvrez-les dans la section Projets !",
-    hackathons: "Radouane a obtenu le titre 'Galactic Problem Solver' lors du NASA Space Apps Challenge 2026 (Nov 2026) et s'est distingué au Build with Gemma Hackathon (Juillet 2026) organisé par GDGC ENSAB, Google Gemma Team et AI Crafters !",
+    hackathons: "Radouane s'est illustré dans 3 grands hackathons en 2026 : 'Galactic Problem Solver' au NASA Space Apps Challenge 2026, 1ère Place & Certifié au Build with Gemma Hackathon (Technopark Casablanca), et participant sélectionné au Rally IA Future Lab à Merzouga !",
     experience: "Il est Technicien Spécialisé en Développement à l'ENS Fès (depuis Sept 2024), avec plus de 4 ans d'expérience chez E-Market Solutions en automatisation Python/Selenium, et prépare son diplôme d'Ingénieur d'État à l'UPF.",
     contact: "Vous pouvez contacter Radouane via le formulaire de contact, par e-mail à radouane.elasri@usmba.ac.ma ou par téléphone au +212 609365349.",
     default: "Je peux vous parler des compétences, des projets, des hackathons, de l'expérience de Radouane ou de la manière de le contacter !"

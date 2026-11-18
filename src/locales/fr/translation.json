@@ -44,8 +44,11 @@
     "default_hack_nasa_2026_award": "Galactic Problem Solver 🚀",
     "default_hack_nasa_2026_description": "Décerné par la NASA (signé par Marc Kuchner, Program Scientist) pour une participation remarquable et la conception de solutions innovantes aux défis de la Terre et de l'espace.",
     "default_hack_gemma_2026_title": "Build with Gemma Hackathon",
-    "default_hack_gemma_2026_award": "Innovateur IA — Modèles Gemma 🧠",
-    "default_hack_gemma_2026_description": "Développement de solutions d'IA performantes basées sur les modèles légers open-weight Google Gemma, organisé par GDGC ENSAB en collaboration avec Google Gemma Team et AI Crafters."
+    "default_hack_gemma_2026_award": "1ère Place 🏆 & Certifié",
+    "default_hack_gemma_2026_description": "Développement de solutions d'IA performantes basées sur les modèles légers open-weight Google Gemma au Technopark Casablanca, organisé par GDGC ENSAB, Google Gemma Team et AI Crafters.",
+    "default_hack_rallyia_2026_title": "Rally IA Future Lab (Hackathon RallyIA)",
+    "default_hack_rallyia_2026_award": "Talent National IA 🇲🇦",
+    "default_hack_rallyia_2026_description": "Participant sélectionné au hackathon national Rally IA Future Lab à Merzouga (initiative 'AI Made in Morocco' sous le Haut Patronage Royal), prototypage de solutions d'IA souveraines."
   },
   "certificates_page": {
     "back_home": "Retour au Portfolio",

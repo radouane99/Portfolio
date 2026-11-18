@@ -212,7 +212,7 @@ export default function Home() {
                 }`}
               >
                 <Trophy className="w-3.5 h-3.5 text-amber-400" />
-                NASA Space Apps & Gemma AI
+                NASA Space Apps • Gemma AI • RallyIA
               </a>
             </motion.div>
 
@@ -344,7 +344,7 @@ export default function Home() {
                 onClick={(e) => scrollTo(e, 'projects')}
               />
               <StatBadge
-                targetNumber={2}
+                targetNumber={3}
                 suffix=" 🏆"
                 label={t('nav.hackathons', { defaultValue: 'Hackathons' })}
                 dark={dark}

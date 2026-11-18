@@ -1,4 +1,5 @@
-import { Mail, Phone, MapPin, Github, Linkedin } from 'lucide-react';
+import { Mail, Phone, MapPin, Github, Linkedin, Lock } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../contexts/ThemeContext';
 import logoLight from "../assets/img/1.png";
@@ -168,12 +169,22 @@ const Footer = () => {
           <p className={`text-sm font-medium ${drakeMode ? 'text-gray-500' : 'text-gray-500'}`}>
             {t('footer.copyright', { year: new Date().getFullYear() })}
           </p>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4">
              <span className={`text-xs uppercase tracking-widest font-bold ${
                drakeMode ? 'text-gray-600' : 'text-gray-400'
              }`}>
                Designed with ❤️ by Radouane
              </span>
+             <Link
+               to="/dashboard"
+               title="Admin Dashboard"
+               aria-label="Admin Dashboard"
+               className={`p-1.5 rounded-lg transition-colors ${
+                 drakeMode ? 'text-gray-600 hover:text-violet-400 hover:bg-white/5' : 'text-gray-400 hover:text-violet-600 hover:bg-violet-50'
+               }`}
+             >
+               <Lock className="w-3.5 h-3.5" />
+             </Link>
           </div>
         </div>
       </div>

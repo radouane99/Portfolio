@@ -43,9 +43,13 @@ export default function Hackathons() {
     };
   }, []);
 
-  // Localize default fallback items if they match hack-nasa-2026 or hack-gemma-2026
+  // Localize default fallback items if they match hack-nasa-2026, hack-gemma-2026, or hack-rallyia-2026
   const getLocalizedField = (item, field) => {
-    if (item.id === 'hack-nasa-2026' || item.id === 'hack-gemma-2026') {
+    if (
+      item.id === 'hack-nasa-2026' ||
+      item.id === 'hack-gemma-2026' ||
+      item.id === 'hack-rallyia-2026'
+    ) {
       const safeId = item.id.replace(/-/g, '_');
       const key = `hackathons.default_${safeId}_${field}`;
       const translated = t(key, { defaultValue: '' });

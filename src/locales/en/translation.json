@@ -44,8 +44,11 @@
     "default_hack_nasa_2026_award": "Galactic Problem Solver 🚀",
     "default_hack_nasa_2026_description": "Awarded the Galactic Problem Solver certification by NASA (signed by Program Scientist Marc Kuchner) for outstanding participation and engineering efforts addressing complex challenges on Earth and in space.",
     "default_hack_gemma_2026_title": "Build with Gemma Hackathon",
-    "default_hack_gemma_2026_award": "Open-Weight AI Innovator 🧠",
-    "default_hack_gemma_2026_description": "Developed efficient, production-ready AI solutions using Google Gemma lightweight open-weight models in collaboration with GDGC ENSAB, Google Gemma Team, and AI Crafters."
+    "default_hack_gemma_2026_award": "1st Place Winner 🏆 & Certified",
+    "default_hack_gemma_2026_description": "Collaborated on developing high-efficiency AI solutions powered by Google Gemma lightweight open-weight models at Technopark Casablanca, recognized for technical excellence, innovation, and teamwork.",
+    "default_hack_rallyia_2026_title": "Rally IA Future Lab (RallyIA Hackathon)",
+    "default_hack_rallyia_2026_award": "National AI Talent 🇲🇦",
+    "default_hack_rallyia_2026_description": "Selected participant in the national Rally IA Future Lab hackathon held under High Royal Patronage in Merzouga, prototyping sovereign 'AI Made in Morocco' solutions alongside top national engineers."
   },
   "certificates_page": {
     "back_home": "Back to Portfolio",

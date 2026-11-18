@@ -2,21 +2,22 @@ import { supabase } from '../lib/supabase'
 import { uploadImage, deleteImage, getImageUrl, STORAGE_BUCKETS } from '../lib/storage'
 import nasaSpaceAppsCert from '../assets/img/nasa-space-apps-2026.jpg'
 import gemmaCert from '../assets/img/build-with-gemma-2026.jpg'
+import rallyIaCert from '../assets/img/rally-ia-2026.jpg'
 
-const LOCAL_STORAGE_KEY = 'portfolio_hackathons_v2'
+const LOCAL_STORAGE_KEY = 'portfolio_hackathons_v3'
 
 export const DEFAULT_HACKATHONS = [
   {
     id: 'hack-nasa-2026',
     title: '2026 NASA Space Apps Challenge',
-    organizer: 'NASA — Space Apps Challenge',
+    organizer: 'NASA — National Aeronautics and Space Administration',
     event_date: 'November 14–15, 2026',
     location: 'Morocco / Global',
     award: 'Galactic Problem Solver 🚀',
-    project_name: 'Earth & Space Challenge Solution',
+    project_name: 'Earth & Space Observation Platform',
     description:
       'Awarded the Galactic Problem Solver certification by NASA (signed by Program Scientist Marc Kuchner) for outstanding participation and engineering efforts addressing complex challenges on Earth and in space.',
-    technologies: ['Python', 'React', 'NASA Open Data', 'Geospatial AI', 'Tailwind CSS'],
+    technologies: ['Python', 'React', 'NASA Open APIs', 'Geospatial AI', 'Tailwind CSS'],
     image_url: nasaSpaceAppsCert,
     certificate_image_url: nasaSpaceAppsCert,
     certificate_url: '/certificates/nasa-space-apps-2026.jpg',
@@ -28,17 +29,34 @@ export const DEFAULT_HACKATHONS = [
     title: 'Build with Gemma Hackathon',
     organizer: 'GDGC ENSAB × Google Gemma Team × AI Crafters',
     event_date: 'July 26, 2026',
-    location: 'Morocco',
-    award: 'Open-Weight AI Innovator 🧠',
-    project_name: 'Gemma Lightweight AI Application',
+    location: 'Technopark Casablanca, Morocco',
+    award: '1st Place Winner 🏆 & Certified',
+    project_name: 'Gemma Open-Weight AI Solution',
     description:
-      'Developed efficient, production-ready AI solutions using Google Gemma lightweight open-weight models in collaboration with GDGC ENSAB, Google Gemma Team, and AI Crafters.',
-    technologies: ['Google Gemma', 'Python', 'Open-Weight LLMs', 'React', 'AI Engineering'],
+      'Collaborated on developing high-efficiency AI solutions powered by Google Gemma lightweight open-weight models at Technopark Casablanca, recognized for technical excellence, innovation, and teamwork.',
+    technologies: ['Google Gemma', 'Python', 'Open-Weight LLMs', 'React', 'FastAPI'],
     image_url: gemmaCert,
     certificate_image_url: gemmaCert,
     certificate_url: '/certificates/build-with-gemma-2026.pdf',
     project_url: 'https://github.com/radouane99',
     created_at: '2026-07-26T10:00:00Z',
+  },
+  {
+    id: 'hack-rallyia-2026',
+    title: 'Rally IA Future Lab (RallyIA Hackathon)',
+    organizer: 'Ministry of Digital Transition • AI Made in Morocco',
+    event_date: 'June 16–20, 2026',
+    location: 'Merzouga, Morocco',
+    award: 'National AI Talent 🇲🇦',
+    project_name: 'Sovereign AI & Smart Public Services',
+    description:
+      'Selected participant in the national Rally IA Future Lab hackathon held under High Royal Patronage in Merzouga, prototyping sovereign "AI Made in Morocco" solutions alongside top national engineers and researchers.',
+    technologies: ['Artificial Intelligence', 'LLMs & RAG', 'Python', 'React', 'Supabase'],
+    image_url: rallyIaCert,
+    certificate_image_url: rallyIaCert,
+    certificate_url: '/certificates/rally-ia-2026.jpg',
+    project_url: 'https://github.com/radouane99',
+    created_at: '2026-06-20T10:00:00Z',
   },
 ]
 
@@ -96,7 +114,6 @@ export async function getHackathons() {
 
     if (data && data.length > 0) {
       const formatted = data.map(formatHackathonRecord)
-      // Merge default real hackathons if not already present by title
       const existingTitles = new Set(formatted.map((h) => h.title?.toLowerCase()))
       const merged = [
         ...formatted,
@@ -132,9 +149,6 @@ export async function getHackathonById(id) {
   }
 }
 
-/**
- * Helper to convert File to Data URL for local fallback persistence
- */
 function fileToDataUrl(file) {
   return new Promise((resolve) => {
     if (!file) return resolve(null)
@@ -219,7 +233,8 @@ export async function createHackathon(hackathonData, eventImageFile = null, cert
       image_path: imagePath,
       certificate_path: certPath,
       image_url: eventDataUrl || certDataUrl || hackathonData.image_url || nasaSpaceAppsCert,
-      certificate_image_url: certDataUrl || eventDataUrl || hackathonData.certificate_image_url || null,
+      certificate_image_url:
+        certDataUrl || eventDataUrl || hackathonData.certificate_image_url || null,
       created_at: new Date().toISOString(),
     })
 
